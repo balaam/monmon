@@ -1,0 +1,6 @@
+#summary MonMon Introduction Page.
+
+= Introduction =
+
+MonMon uses Scintilla to create a pleasant tabbed Lua editor. 
+If you want to play with the code you'll ScintillaNET(http://www.codeplex.com/ScintillaNET) and NUnit(http://www.nunit.org/).
