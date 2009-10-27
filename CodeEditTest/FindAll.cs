@@ -12,6 +12,7 @@ namespace MonMon
     public partial class FindAll : Form
     {
         string _searchString = "";
+        string _defaultSearch = "";
 
         public string SearchString
         {
@@ -29,10 +30,29 @@ namespace MonMon
 
         private void OnClickFindAll(object sender, EventArgs e)
         {
-            _searchString = comboBoxFind.Text;
-            comboBoxFind.Text = "";
-            comboBoxFind.Items.Add(_searchString);
+            _searchString = _comboBoxFind.Text;
+            _comboBoxFind.Text = "";
+            _comboBoxFind.Items.Add(_searchString);
             Close();
+        }
+
+        public void SetDefaultSearchString(string value)
+        {
+            _defaultSearch = value;
+        }
+
+        protected override void OnShown(EventArgs e)
+        {
+            _comboBoxFind.Text = _defaultSearch;
+            _comboBoxFind.SelectAll();
+            _comboBoxFind.Focus();
+            base.OnShown(e);
+        }
+
+        protected override void OnClosed(EventArgs e)
+        {
+            _defaultSearch = "";
+            base.OnClosed(e);
         }
     }
 }
