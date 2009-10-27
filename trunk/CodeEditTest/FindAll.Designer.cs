@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.buttonFindAll = new System.Windows.Forms.Button();
-            this.comboBoxFind = new System.Windows.Forms.ComboBox();
+            this._comboBoxFind = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
@@ -45,11 +45,11 @@
             // 
             // comboBox1
             // 
-            this.comboBoxFind.FormattingEnabled = true;
-            this.comboBoxFind.Location = new System.Drawing.Point(24, 58);
-            this.comboBoxFind.Name = "comboBox1";
-            this.comboBoxFind.Size = new System.Drawing.Size(314, 21);
-            this.comboBoxFind.TabIndex = 1;
+            this._comboBoxFind.FormattingEnabled = true;
+            this._comboBoxFind.Location = new System.Drawing.Point(24, 58);
+            this._comboBoxFind.Name = "comboBox1";
+            this._comboBoxFind.Size = new System.Drawing.Size(314, 21);
+            this._comboBoxFind.TabIndex = 1;
             // 
             // label1
             // 
@@ -66,7 +66,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(350, 147);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.comboBoxFind);
+            this.Controls.Add(this._comboBoxFind);
             this.Controls.Add(this.buttonFindAll);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "FindAll";
@@ -80,7 +80,7 @@
         #endregion
 
         private System.Windows.Forms.Button buttonFindAll;
-        private System.Windows.Forms.ComboBox comboBoxFind;
+        private System.Windows.Forms.ComboBox _comboBoxFind;
         private System.Windows.Forms.Label label1;
     }
 }

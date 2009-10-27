@@ -87,7 +87,14 @@ namespace MonMon
             if (e.Control && e.Shift && e.KeyCode == Keys.F)
             {
                // Find all
-               
+
+                // preload find all with selected text
+                if (_tabControl.SelectedTab != null)
+                {
+                    string selectedText = _tabData[_tabControl.SelectedTab].Scintilla.Selection.Text;
+                    _findAllDialog.SetDefaultSearchString(selectedText);
+                }
+           
                if (_findAllDialog.ShowDialog() == DialogResult.OK)
                {
                    FindAll(_findAllDialog.SearchString);
@@ -210,6 +217,7 @@ namespace MonMon
             _tabControl.Controls.Add(tabPage);
             _tabControl.SelectedTab = tabPage;
             tabPage.Focus();
+            scintilla.Focus();
             _tabData.Add(tabPage, new TabData(name, scintilla));
             return _tabData[tabPage];
         }
