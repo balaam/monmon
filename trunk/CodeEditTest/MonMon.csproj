@@ -105,7 +105,19 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
+    <Compile Include="FunctionList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="FunctionList.Designer.cs">
+      <DependentUpon>FunctionList.cs</DependentUpon>
+    </Compile>
     <Compile Include="MRUManager.cs" />
+    <Compile Include="OpenFilesList.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="OpenFilesList.Designer.cs">
+      <DependentUpon>OpenFilesList.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="FindAll.resx">
@@ -114,6 +126,12 @@
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
       <SubType>Designer</SubType>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FunctionList.resx">
+      <DependentUpon>FunctionList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OpenFilesList.resx">
+      <DependentUpon>OpenFilesList.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

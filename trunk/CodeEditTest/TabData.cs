@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using ScintillaNet;
 using System.IO;
+using System.Windows.Forms;
 
 namespace MonMon
 {
@@ -55,7 +56,15 @@ namespace MonMon
 
         internal void Save()
         {
-            File.WriteAllText(_path, _scintilla.Text);
+            try
+            {
+                File.WriteAllText(_path, _scintilla.Text);
+            }
+            catch (UnauthorizedAccessException e)
+            {
+                MessageBox.Show("Can't write to file, perhaps it's readonly?", "Write Error",
+                    MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

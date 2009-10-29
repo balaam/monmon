@@ -33,23 +33,24 @@
             this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
-            // button1
+            // buttonFindAll
             // 
             this.buttonFindAll.Location = new System.Drawing.Point(263, 112);
-            this.buttonFindAll.Name = "button1";
+            this.buttonFindAll.Name = "buttonFindAll";
             this.buttonFindAll.Size = new System.Drawing.Size(75, 23);
             this.buttonFindAll.TabIndex = 0;
             this.buttonFindAll.Text = "Find All";
             this.buttonFindAll.UseVisualStyleBackColor = true;
             this.buttonFindAll.Click += new System.EventHandler(this.OnClickFindAll);
             // 
-            // comboBox1
+            // _comboBoxFind
             // 
             this._comboBoxFind.FormattingEnabled = true;
             this._comboBoxFind.Location = new System.Drawing.Point(24, 58);
-            this._comboBoxFind.Name = "comboBox1";
+            this._comboBoxFind.Name = "_comboBoxFind";
             this._comboBoxFind.Size = new System.Drawing.Size(314, 21);
             this._comboBoxFind.TabIndex = 1;
+            this._comboBoxFind.KeyUp += new System.Windows.Forms.KeyEventHandler(this._comboBoxFind_KeyUp);
             // 
             // label1
             // 

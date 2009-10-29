@@ -54,5 +54,13 @@ namespace MonMon
             _defaultSearch = "";
             base.OnClosed(e);
         }
+
+        private void _comboBoxFind_KeyUp(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                buttonFindAll.PerformClick();
+            }
+        }
     }
 }
