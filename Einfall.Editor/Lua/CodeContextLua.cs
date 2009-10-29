@@ -12,7 +12,7 @@ namespace Einfall.Editor.Lua
         CodeTransformer _codeTransformer;
         List<FunctionMetaData> _functionList = new List<FunctionMetaData>();
 
-        Regex _matchFunction = new Regex(@"function(\s+\w*\s*\([\w\s,]*\))|function\s*\([\w\s,]*\)");
+        Regex _matchFunction = new Regex(@"function(\s+\w+\:?\w*\s*\([\w\s,]*\))|function\s*\([\w\s,]*\)");
 
 
 

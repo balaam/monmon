@@ -118,5 +118,20 @@ namespace Einfall.Editor
             _context.UpdateFunctionList(test1);
             Assert.IsTrue(_context.FunctionList[0].Name == "TestFunction");
         }
+
+        [Test]
+        public void Test_FindNamedTabledFunction()
+        {
+            _context.ClearFunctionList();
+            string test1 = "Cat = {} function Cat:TestFunction(one, two, three)";
+            _context.UpdateFunctionList(test1);
+
+            //
+            // WARNING, this is probably a temporary, in the future, 
+            // table functions maybe grouped in some unspecified way.
+            // a tree?
+            //
+            Assert.IsTrue(_context.FunctionList[0].Name == "Cat:TestFunction");
+        }
     }
 }
