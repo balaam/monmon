@@ -10,4 +10,13 @@ If you want to play with the code you'll ScintillaNET(http://www.codeplex.com/Sc
   * Multiple tabs
   * Find All
   * Function listing
+  * Full syntax highlighting for LUA
+
+= Coming features =
+
+  * More comphrehsive function listing 
+    * Ordering
+    * Id broken function / malformed
+    * Sorting function display
+    * Allow code to have the functions sorted.
  
