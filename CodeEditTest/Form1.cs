@@ -51,6 +51,8 @@ namespace MonMon
                     LoadFileFromPath(file);
                 }
             }
+            _functionListControl.ClickRefresh += new EventHandler(Refresh_Click);
+            _functionListControl.DoubleClickFunctionList += new EventHandler(OnFunctionShortCutDblClicked);
         }
 
         void OnThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
@@ -193,10 +195,11 @@ namespace MonMon
                 return;
             }
             Scintilla scintilla = (Scintilla)_tabControl.SelectedTab.Controls[0];
-            _listBoxFunctions.Items.Clear();
+            
             _codeContext.UpdateFunctionList(scintilla);
-            List<FunctionMetaData> functionList = _codeContext.FunctionList;
-            functionList.ForEach(x => _listBoxFunctions.Items.Add(x));
+  
+         
+            _functionListControl.Update(_codeContext.FunctionList);
         }
 
         private void OnNewClicked(object sender, EventArgs e)
@@ -378,6 +381,49 @@ namespace MonMon
             _tabData[_tabControl.SelectedTab].Scintilla.GoTo.Line(functionData.StartLine);
             _tabControl.Focus();
             _tabData[_tabControl.SelectedTab].Scintilla.Focus();
+        }
+
+        private void OnFormDragOver(object sender, DragEventArgs e)
+        {
+             if(    e.Data.GetDataPresent(DataFormats.FileDrop) == false
+                ||  e.Data.GetDataPresent("FileNameW")          == false)
+             {
+                 return;
+             }
+             
+             if ((e.AllowedEffect & DragDropEffects.Copy) != 0)
+             {
+
+                 string[] filePathInfo = (string[])e.Data.GetData("FileNameW", true);
+
+                 // If there is even one correct path use it.
+                 foreach (string path in filePathInfo)
+                 {
+                     if (path.Length == 0)
+                     {
+                         continue;
+                     }
+
+                     if (path.ToLower().EndsWith(".lua"))
+                     {
+                         e.Effect = DragDropEffects.Copy;
+                     }
+                 }   
+             }
+        }
+
+        private void OnDragDropOnForm(object sender, DragEventArgs e)
+        {
+            string[] filePathInfo = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+
+            foreach (string path in filePathInfo)
+            {
+                if (path.ToLower().EndsWith(".lua"))
+                {
+                    LoadFileFromPath(path);
+                }
+            }
         }
     }
 }

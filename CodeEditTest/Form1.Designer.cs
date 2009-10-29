@@ -29,9 +29,6 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-            this._listBoxFunctions = new System.Windows.Forms.ListBox();
-            this._buttonRefresh = new System.Windows.Forms.Button();
-            this._tabControl = new System.Windows.Forms.TabControl();
             this._menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -40,7 +37,6 @@
             this.saveAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recentFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this._listBoxFindResults = new System.Windows.Forms.ListBox();
             this._openFileDialog = new System.Windows.Forms.OpenFileDialog();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this._statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
@@ -48,51 +44,27 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this._tabControlView = new System.Windows.Forms.TabControl();
+            this._tabPageFunctionList = new System.Windows.Forms.TabPage();
+            this._tabPageFiles = new System.Windows.Forms.TabPage();
             this.splitContainer2 = new System.Windows.Forms.SplitContainer();
+            this._tabControl = new System.Windows.Forms.TabControl();
+            this._listBoxFindResults = new System.Windows.Forms.ListBox();
+            this._functionListControl = new MonMon.FunctionList();
+            this.openFilesList1 = new MonMon.OpenFilesList();
             this._menuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this._tabControlView.SuspendLayout();
+            this._tabPageFunctionList.SuspendLayout();
+            this._tabPageFiles.SuspendLayout();
             this.splitContainer2.Panel1.SuspendLayout();
             this.splitContainer2.Panel2.SuspendLayout();
             this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // _listBoxFunctions
-            // 
-            this._listBoxFunctions.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._listBoxFunctions.FormattingEnabled = true;
-            this._listBoxFunctions.Location = new System.Drawing.Point(0, 0);
-            this._listBoxFunctions.Margin = new System.Windows.Forms.Padding(2);
-            this._listBoxFunctions.Name = "_listBoxFunctions";
-            this._listBoxFunctions.Size = new System.Drawing.Size(110, 394);
-            this._listBoxFunctions.TabIndex = 1;
-            this._listBoxFunctions.DoubleClick += new System.EventHandler(this.OnFunctionShortCutDblClicked);
-            // 
-            // _buttonRefresh
-            // 
-            this._buttonRefresh.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this._buttonRefresh.Location = new System.Drawing.Point(0, 399);
-            this._buttonRefresh.Name = "_buttonRefresh";
-            this._buttonRefresh.Size = new System.Drawing.Size(110, 24);
-            this._buttonRefresh.TabIndex = 2;
-            this._buttonRefresh.Text = "button1";
-            this._buttonRefresh.UseVisualStyleBackColor = true;
-            this._buttonRefresh.Click += new System.EventHandler(this.Refresh_Click);
-            // 
-            // _tabControl
-            // 
-            this._tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._tabControl.Location = new System.Drawing.Point(0, 0);
-            this._tabControl.Margin = new System.Windows.Forms.Padding(2);
-            this._tabControl.Multiline = true;
-            this._tabControl.Name = "_tabControl";
-            this._tabControl.Padding = new System.Drawing.Point(0, 0);
-            this._tabControl.SelectedIndex = 0;
-            this._tabControl.Size = new System.Drawing.Size(609, 356);
-            this._tabControl.TabIndex = 3;
             // 
             // _menuStrip
             // 
@@ -162,15 +134,6 @@
             this.closeToolStripMenuItem.Text = "&Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.OnCloseFileClicked);
             // 
-            // _listBoxFindResults
-            // 
-            this._listBoxFindResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._listBoxFindResults.FormattingEnabled = true;
-            this._listBoxFindResults.Location = new System.Drawing.Point(0, 0);
-            this._listBoxFindResults.Name = "_listBoxFindResults";
-            this._listBoxFindResults.Size = new System.Drawing.Size(609, 69);
-            this._listBoxFindResults.TabIndex = 4;
-            // 
             // _openFileDialog
             // 
             this._openFileDialog.DefaultExt = "lua";
@@ -233,16 +196,48 @@
             // 
             // splitContainer1.Panel1
             // 
-            this.splitContainer1.Panel1.Controls.Add(this._buttonRefresh);
-            this.splitContainer1.Panel1.Controls.Add(this._listBoxFunctions);
-            this.splitContainer1.Panel1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 25);
+            this.splitContainer1.Panel1.Controls.Add(this._tabControlView);
             // 
             // splitContainer1.Panel2
             // 
             this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
             this.splitContainer1.Size = new System.Drawing.Size(723, 429);
-            this.splitContainer1.SplitterDistance = 110;
+            this.splitContainer1.SplitterDistance = 122;
             this.splitContainer1.TabIndex = 8;
+            // 
+            // _tabControlView
+            // 
+            this._tabControlView.Controls.Add(this._tabPageFunctionList);
+            this._tabControlView.Controls.Add(this._tabPageFiles);
+            this._tabControlView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._tabControlView.Location = new System.Drawing.Point(0, 0);
+            this._tabControlView.Multiline = true;
+            this._tabControlView.Name = "_tabControlView";
+            this._tabControlView.SelectedIndex = 0;
+            this._tabControlView.Size = new System.Drawing.Size(122, 429);
+            this._tabControlView.TabIndex = 4;
+            // 
+            // _tabPageFunctionList
+            // 
+            this._tabPageFunctionList.Controls.Add(this._functionListControl);
+            this._tabPageFunctionList.Location = new System.Drawing.Point(4, 22);
+            this._tabPageFunctionList.Name = "_tabPageFunctionList";
+            this._tabPageFunctionList.Padding = new System.Windows.Forms.Padding(3);
+            this._tabPageFunctionList.Size = new System.Drawing.Size(114, 403);
+            this._tabPageFunctionList.TabIndex = 0;
+            this._tabPageFunctionList.Text = "Functions";
+            this._tabPageFunctionList.UseVisualStyleBackColor = true;
+            // 
+            // _tabPageFiles
+            // 
+            this._tabPageFiles.Controls.Add(this.openFilesList1);
+            this._tabPageFiles.Location = new System.Drawing.Point(4, 22);
+            this._tabPageFiles.Name = "_tabPageFiles";
+            this._tabPageFiles.Padding = new System.Windows.Forms.Padding(3);
+            this._tabPageFiles.Size = new System.Drawing.Size(114, 403);
+            this._tabPageFiles.TabIndex = 1;
+            this._tabPageFiles.Text = "Files";
+            this._tabPageFiles.UseVisualStyleBackColor = true;
             // 
             // splitContainer2
             // 
@@ -258,12 +253,49 @@
             // splitContainer2.Panel2
             // 
             this.splitContainer2.Panel2.Controls.Add(this._listBoxFindResults);
-            this.splitContainer2.Size = new System.Drawing.Size(609, 429);
+            this.splitContainer2.Size = new System.Drawing.Size(597, 429);
             this.splitContainer2.SplitterDistance = 356;
             this.splitContainer2.TabIndex = 0;
             // 
+            // _tabControl
+            // 
+            this._tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._tabControl.Location = new System.Drawing.Point(0, 0);
+            this._tabControl.Margin = new System.Windows.Forms.Padding(2);
+            this._tabControl.Name = "_tabControl";
+            this._tabControl.Padding = new System.Drawing.Point(0, 0);
+            this._tabControl.SelectedIndex = 0;
+            this._tabControl.Size = new System.Drawing.Size(597, 356);
+            this._tabControl.TabIndex = 3;
+            // 
+            // _listBoxFindResults
+            // 
+            this._listBoxFindResults.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._listBoxFindResults.FormattingEnabled = true;
+            this._listBoxFindResults.Location = new System.Drawing.Point(0, 0);
+            this._listBoxFindResults.Name = "_listBoxFindResults";
+            this._listBoxFindResults.Size = new System.Drawing.Size(597, 69);
+            this._listBoxFindResults.TabIndex = 4;
+            // 
+            // functionList1
+            // 
+            this._functionListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._functionListControl.Location = new System.Drawing.Point(3, 3);
+            this._functionListControl.Name = "functionList1";
+            this._functionListControl.Size = new System.Drawing.Size(108, 397);
+            this._functionListControl.TabIndex = 0;
+            // 
+            // openFilesList1
+            // 
+            this.openFilesList1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.openFilesList1.Location = new System.Drawing.Point(3, 3);
+            this.openFilesList1.Name = "openFilesList1";
+            this.openFilesList1.Size = new System.Drawing.Size(108, 397);
+            this.openFilesList1.TabIndex = 0;
+            // 
             // Form1
             // 
+            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(723, 500);
@@ -273,7 +305,9 @@
             this.Controls.Add(this._menuStrip);
             this.MainMenuStrip = this._menuStrip;
             this.Name = "Form1";
-            this.Text = "Form1";
+            this.Text = "MonMon";
+            this.DragDrop += new System.Windows.Forms.DragEventHandler(this.OnDragDropOnForm);
+            this.DragOver += new System.Windows.Forms.DragEventHandler(this.OnFormDragOver);
             this._menuStrip.ResumeLayout(false);
             this._menuStrip.PerformLayout();
             this.statusStrip1.ResumeLayout(false);
@@ -283,6 +317,9 @@
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel2.ResumeLayout(false);
             this.splitContainer1.ResumeLayout(false);
+            this._tabControlView.ResumeLayout(false);
+            this._tabPageFunctionList.ResumeLayout(false);
+            this._tabPageFiles.ResumeLayout(false);
             this.splitContainer2.Panel1.ResumeLayout(false);
             this.splitContainer2.Panel2.ResumeLayout(false);
             this.splitContainer2.ResumeLayout(false);
@@ -293,8 +330,6 @@
 
         #endregion
 
-        private System.Windows.Forms.ListBox _listBoxFunctions;
-        private System.Windows.Forms.Button _buttonRefresh;
         private System.Windows.Forms.TabControl _tabControl;
         private System.Windows.Forms.MenuStrip _menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
@@ -313,6 +348,11 @@
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.SplitContainer splitContainer2;
+        private System.Windows.Forms.TabControl _tabControlView;
+        private System.Windows.Forms.TabPage _tabPageFunctionList;
+        private System.Windows.Forms.TabPage _tabPageFiles;
+        private OpenFilesList openFilesList1;
+        private FunctionList _functionListControl;
     }
 }
 
