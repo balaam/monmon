@@ -14,11 +14,32 @@ namespace MonMon
         string _path;
         Scintilla _scintilla;
 
+        // Has the file been modified from the file on disk
+        bool _modified = false;
+        int _hashOfTextOnDisk = "".GetHashCode();
+
+        public int DiskHash
+        {
+            get
+            {
+                return _hashOfTextOnDisk;
+            }
+        }
+
+        public event EventHandler OnModifiedFlagChanged;
+
         public string Name
         {
             get
             {
-                return _name;
+                if (_modified)
+                {
+                    return "* " + _name;
+                }
+                else
+                {
+                    return _name;
+                }
             }
 
             set
@@ -56,6 +77,7 @@ namespace MonMon
 
         internal void Save()
         {
+            bool success = true;
             try
             {
                 File.WriteAllText(_path, _scintilla.Text);
@@ -64,7 +86,25 @@ namespace MonMon
             {
                 MessageBox.Show("Can't write to file, perhaps it's readonly?", "Write Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
+                success = false;
             }
+
+            if (success)
+            {
+                SetModifiedFlag(false);
+                SetDiskHash(_scintilla.Text.GetHashCode());
+            }
+        }
+
+        internal void SetModifiedFlag(bool value)
+        {
+            _modified = value;
+            OnModifiedFlagChanged(this, EventArgs.Empty);
+        }
+
+        internal void SetDiskHash(int diskHash)
+        {
+            _hashOfTextOnDisk = diskHash;
         }
     }
 }

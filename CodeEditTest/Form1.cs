@@ -221,10 +221,17 @@ namespace MonMon
             _tabControl.SelectedTab = tabPage;
             tabPage.Focus();
             scintilla.Focus();
-            _tabData.Add(tabPage, new TabData(name, scintilla));
+            TabData tabData = new TabData(name, scintilla);
+            _tabData.Add(tabPage, tabData);
+            tabData.OnModifiedFlagChanged += delegate(object sender, EventArgs e)
+            {
+                tabPage.Text = tabData.Name;
+               
+            };
             return _tabData[tabPage];
         }
 
+  
         private Scintilla CreateNewLuaScintilla()
         {
             Scintilla scintilla = new Scintilla();
@@ -251,16 +258,28 @@ namespace MonMon
             scintilla.AutoComplete.AutoHide = false;
             scintilla.AutoComplete.AutomaticLengthEntered = true;
             scintilla.MouseClick += new MouseEventHandler(OnScintillaMouseClick);
-            scintilla.MouseDown += new MouseEventHandler(scintilla_MouseDown);
-         
+            scintilla.TextChanged += new EventHandler<EventArgs>(OnScintillaTextChanged);
             scintilla.Focus();
             return scintilla;
         }
 
-        void scintilla_MouseDown(object sender, MouseEventArgs e)
+        void OnScintillaTextChanged(object sender, EventArgs e)
         {
-            int i = ((Scintilla)(sender)).Caret.Position;
+            Scintilla scintilla = (Scintilla) sender;
+            
+            // This could go a little wrong, in say mass find replace?
+            if (_tabControl.SelectedTab == null)
+            {
+                return;
+            }
+
+            bool same = scintilla.Text.GetHashCode() == _tabData[_tabControl.SelectedTab].DiskHash;
+
+            _tabData[_tabControl.SelectedTab].SetModifiedFlag(!same);
+            
         }
+
+  
 
         void OnScintillaMouseClick(object sender, MouseEventArgs e)
         {
@@ -292,9 +311,13 @@ namespace MonMon
         private void LoadFileFromPath(string path)
         {
             string fullText = File.ReadAllText(path);
+            
             TabData tabdata = CreateNewFileTab(System.IO.Path.GetFileName(path));
             tabdata.Path = path;
-            tabdata.Scintilla.AppendText(fullText); 
+            tabdata.Scintilla.AppendText(fullText);
+            tabdata.Scintilla.UndoRedo.EmptyUndoBuffer();
+            tabdata.SetModifiedFlag(false);
+            tabdata.SetDiskHash(fullText.GetHashCode());
         }
 
         private void OnSaveClicked(object sender, EventArgs e)
