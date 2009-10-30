@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.listBox1 = new System.Windows.Forms.ListBox();
+            this._textBoxFilter = new System.Windows.Forms.TextBox();
+            this._fileListBox = new System.Windows.Forms.ListBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -38,8 +38,8 @@
             // 
             this.tableLayoutPanel1.ColumnCount = 1;
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
-            this.tableLayoutPanel1.Controls.Add(this.textBox1, 0, 1);
-            this.tableLayoutPanel1.Controls.Add(this.listBox1, 0, 0);
+            this.tableLayoutPanel1.Controls.Add(this._textBoxFilter, 0, 1);
+            this.tableLayoutPanel1.Controls.Add(this._fileListBox, 0, 0);
             this.tableLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.tableLayoutPanel1.Location = new System.Drawing.Point(0, 0);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
@@ -49,22 +49,24 @@
             this.tableLayoutPanel1.Size = new System.Drawing.Size(110, 376);
             this.tableLayoutPanel1.TabIndex = 0;
             // 
-            // textBox1
+            // _textBoxFilter
             // 
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.textBox1.Location = new System.Drawing.Point(3, 349);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(104, 20);
-            this.textBox1.TabIndex = 0;
+            this._textBoxFilter.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._textBoxFilter.Location = new System.Drawing.Point(3, 349);
+            this._textBoxFilter.Name = "_textBoxFilter";
+            this._textBoxFilter.Size = new System.Drawing.Size(104, 20);
+            this._textBoxFilter.TabIndex = 0;
+            this._textBoxFilter.TextChanged += new System.EventHandler(this.OnFilterTextChanged);
             // 
-            // listBox1
+            // _fileListBox
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(3, 3);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(104, 329);
-            this.listBox1.TabIndex = 1;
+            this._fileListBox.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._fileListBox.FormattingEnabled = true;
+            this._fileListBox.Location = new System.Drawing.Point(3, 3);
+            this._fileListBox.Name = "_fileListBox";
+            this._fileListBox.Size = new System.Drawing.Size(104, 329);
+            this._fileListBox.TabIndex = 1;
+            this._fileListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnDoubleClickFileList);
             // 
             // OpenFilesList
             // 
@@ -82,8 +84,8 @@
         #endregion
 
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.ListBox listBox1;
+        private System.Windows.Forms.TextBox _textBoxFilter;
+        private System.Windows.Forms.ListBox _fileListBox;
 
     }
 }

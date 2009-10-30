@@ -53,7 +53,10 @@ namespace MonMon
             }
             _functionListControl.ClickRefresh += new EventHandler(Refresh_Click);
             _functionListControl.DoubleClickFunctionList += new EventHandler(OnFunctionShortCutDblClicked);
+            _openFilesControl.DoubleClickFileList += new EventHandler(OnFileListDoubleClicked);
         }
+
+
 
         void OnThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
@@ -223,11 +226,15 @@ namespace MonMon
             scintilla.Focus();
             TabData tabData = new TabData(name, scintilla);
             _tabData.Add(tabPage, tabData);
+            _openFilesControl.AddFile(tabPage);
             tabData.OnModifiedFlagChanged += delegate(object sender, EventArgs e)
             {
                 tabPage.Text = tabData.Name;
+                _openFilesControl.RefreshItem(tabPage);
                
             };
+            tabData.SetModifiedFlag(true);
+         
             return _tabData[tabPage];
         }
 
@@ -318,6 +325,7 @@ namespace MonMon
             tabdata.Scintilla.UndoRedo.EmptyUndoBuffer();
             tabdata.SetModifiedFlag(false);
             tabdata.SetDiskHash(fullText.GetHashCode());
+          
         }
 
         private void OnSaveClicked(object sender, EventArgs e)
@@ -353,8 +361,10 @@ namespace MonMon
 
         private void CloseFile(TabPage tabPage)
         {
+            _openFilesControl.RemoveFile(tabPage);
             _tabData.Remove(tabPage); // probably should be a save prompt.
             _tabControl.TabPages.Remove(tabPage);
+           
             tabPage.Dispose();
         }
 
@@ -388,6 +398,36 @@ namespace MonMon
                 }
             }
             
+        }
+
+        void OnFileListDoubleClicked(object sender, EventArgs e)
+        {
+            ListBox fileListBox = (ListBox)sender;
+
+            if (fileListBox.SelectedItem == null)
+            {
+                return;
+            }
+
+            string name =(string) fileListBox.SelectedItem;
+            TabPage t = null;
+            foreach (TabPage page in _tabControl.TabPages)
+            {
+                if (name == page.Text)
+                {
+                    t = page;
+                    break;
+                }
+            }
+
+            if (t == null)
+            {
+                return;
+            }
+
+            _tabControl.SelectedTab = t;
+            _tabControl.Focus();
+            _tabData[_tabControl.SelectedTab].Scintilla.Focus();
         }
 
         private void OnFunctionShortCutDblClicked(object sender, EventArgs e)
