@@ -8,7 +8,7 @@ using System.Windows.Forms;
 
 namespace MonMon
 {
-    class TabData
+    public class TabData
     {
         string _name;
         string _path;

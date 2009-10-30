@@ -40,6 +40,11 @@ namespace MonMon
 
         private void OnFilterTyping(object sender, EventArgs e)
         {
+            if (_fullList == null)
+            {
+                // we've not yet intialized anything
+                return;
+            }
             if(_filterTextBox.Text == "")
             {
                 if(_listBoxFunctions.Items.Count == _fullList.Count)

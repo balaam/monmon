@@ -51,7 +51,7 @@
             this._tabControl = new System.Windows.Forms.TabControl();
             this._listBoxFindResults = new System.Windows.Forms.ListBox();
             this._functionListControl = new MonMon.FunctionList();
-            this.openFilesList1 = new MonMon.OpenFilesList();
+            this._openFilesControl = new MonMon.OpenFilesList();
             this._menuStrip.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
@@ -129,7 +129,8 @@
             // closeToolStripMenuItem
             // 
             this.closeToolStripMenuItem.Name = "closeToolStripMenuItem";
-            this.closeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.C)));
+            this.closeToolStripMenuItem.ShortcutKeys = ((System.Windows.Forms.Keys)(((System.Windows.Forms.Keys.Control | System.Windows.Forms.Keys.Shift)
+                        | System.Windows.Forms.Keys.C)));
             this.closeToolStripMenuItem.Size = new System.Drawing.Size(187, 22);
             this.closeToolStripMenuItem.Text = "&Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.OnCloseFileClicked);
@@ -230,7 +231,7 @@
             // 
             // _tabPageFiles
             // 
-            this._tabPageFiles.Controls.Add(this.openFilesList1);
+            this._tabPageFiles.Controls.Add(this._openFilesControl);
             this._tabPageFiles.Location = new System.Drawing.Point(4, 22);
             this._tabPageFiles.Name = "_tabPageFiles";
             this._tabPageFiles.Padding = new System.Windows.Forms.Padding(3);
@@ -277,21 +278,21 @@
             this._listBoxFindResults.Size = new System.Drawing.Size(597, 69);
             this._listBoxFindResults.TabIndex = 4;
             // 
-            // functionList1
+            // _functionListControl
             // 
             this._functionListControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this._functionListControl.Location = new System.Drawing.Point(3, 3);
-            this._functionListControl.Name = "functionList1";
+            this._functionListControl.Name = "_functionListControl";
             this._functionListControl.Size = new System.Drawing.Size(108, 397);
             this._functionListControl.TabIndex = 0;
             // 
-            // openFilesList1
+            // _openFilesControl
             // 
-            this.openFilesList1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openFilesList1.Location = new System.Drawing.Point(3, 3);
-            this.openFilesList1.Name = "openFilesList1";
-            this.openFilesList1.Size = new System.Drawing.Size(108, 397);
-            this.openFilesList1.TabIndex = 0;
+            this._openFilesControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._openFilesControl.Location = new System.Drawing.Point(3, 3);
+            this._openFilesControl.Name = "_openFilesControl";
+            this._openFilesControl.Size = new System.Drawing.Size(108, 397);
+            this._openFilesControl.TabIndex = 0;
             // 
             // Form1
             // 
@@ -351,7 +352,7 @@
         private System.Windows.Forms.TabControl _tabControlView;
         private System.Windows.Forms.TabPage _tabPageFunctionList;
         private System.Windows.Forms.TabPage _tabPageFiles;
-        private OpenFilesList openFilesList1;
+        private OpenFilesList _openFilesControl;
         private FunctionList _functionListControl;
     }
 }
