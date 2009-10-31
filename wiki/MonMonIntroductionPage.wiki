@@ -14,7 +14,7 @@ You will also need Scintilla and NUnit
 
 ScintillaNET(http://www.codeplex.com/ScintillaNET) and NUnit(http://www.nunit.org/).
 
-If it's possible please write unit tests for you code :D
+If it's possible please write unit tests for your code :D
 
 The project is currently very usable but in the early stages. This means there's not a lot of code so it's easy to understand pretty much everything that's going on.
 
