@@ -60,7 +60,7 @@ namespace Einfall.Editor
         public void Test_DontFindMalformedFunction_NoClosingBrace()
         {
             _context.ClearFunctionList();
-            string test1 = "function(";
+            string test1 = "function UnFinished(";
             _context.UpdateFunctionList(test1);
             Assert.IsTrue(_context.FunctionList.Count == 0);
         }
@@ -69,7 +69,7 @@ namespace Einfall.Editor
         public void Test_DontFindMalformedFunction_WrongClosingBrace()
         {
             _context.ClearFunctionList();
-            string test1 = "function(()";
+            string test1 = "function Broke(()";
             _context.UpdateFunctionList(test1);
             Assert.IsTrue(_context.FunctionList.Count == 0);
         }
@@ -78,7 +78,7 @@ namespace Einfall.Editor
         public void Test_FindCorrectlyAnonymousFormattedFunction()
         {
             _context.ClearFunctionList();
-            string test1 = "function()";
+            string test1 = "=function()";
             _context.UpdateFunctionList(test1);
             Assert.IsTrue(_context.FunctionList.Count == 1);
         }
@@ -133,5 +133,49 @@ namespace Einfall.Editor
             //
             Assert.IsTrue(_context.FunctionList[0].Name == "Cat:TestFunction");
         }
+
+ 
+        [Test]
+        public void Test_FindFunction_WorkExample()
+        {
+            _context.ClearFunctionList();
+            string test1 = @"function Main:OnNPCLoadedButNotVisited()
+                                self:DoRepeatNPCNotification()
+                                self.npc:ShowSignal()
+                            end";
+            _context.UpdateFunctionList(test1);
+
+            //
+            // WARNING, this is probably a temporary, in the future, 
+            // table functions maybe grouped in some unspecified way.
+            // a tree?
+            //
+            Assert.IsTrue(_context.FunctionList[0].Name == "Main:OnNPCLoadedButNotVisited");
+        }
+
+        [Test]
+        public void Test_FindFunction_VarArgs()
+        {
+            _context.ClearFunctionList();
+            string test1 = @"        function printf(...)
+                                        io.write(string.format(...))
+                                    end";
+            _context.UpdateFunctionList(test1);
+
+            Assert.IsTrue(_context.FunctionList[0].Name == "printf");
+        }
+
+        [Test]
+        public void Test_FindFunction_MemberFunction()
+        {
+            _context.ClearFunctionList();
+            string test1 = @"        function a.printf(...)
+                                        io.write(string.format(...))
+                                    end";
+            _context.UpdateFunctionList(test1);
+
+            Assert.IsTrue(_context.FunctionList[0].Name == "a.printf");
+        }
+
     }
 }
