@@ -244,10 +244,12 @@ namespace MonMon
             Scintilla scintilla = new Scintilla();
             scintilla.ConfigurationManager.CustomLocation = "lua.xml";
             scintilla.ConfigurationManager.Language = "lua";
+            
             scintilla.Dock = System.Windows.Forms.DockStyle.Fill;
             scintilla.Location = new System.Drawing.Point(3, 3);
             scintilla.Name = "_scintilla";
             scintilla.Scrolling.HorizontalWidth = 400;
+           // scintilla.set
             scintilla.Size = new System.Drawing.Size(570, 373);
             scintilla.Styles.BraceBad.FontName = "Verdana";
             scintilla.Styles.BraceLight.FontName = "Verdana";
@@ -266,6 +268,7 @@ namespace MonMon
             scintilla.AutoComplete.AutomaticLengthEntered = true;
             scintilla.MouseClick += new MouseEventHandler(OnScintillaMouseClick);
             scintilla.TextChanged += new EventHandler<EventArgs>(OnScintillaTextChanged);
+  
             scintilla.Focus();
             return scintilla;
         }

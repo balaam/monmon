@@ -15,7 +15,7 @@ namespace MonMon
         public void Go()
         {
             //_testCodeTransformer.TestGetTextFromWhenIdNotPresent();
-            _textCodeContextLua.Test_FindCorrectlyAnonymousFormattedFunction();
+            _textCodeContextLua.Test_FindFunction_MemberFunction();
            // _testCodeTransformer.FindSecondLineIndex();
         }
 

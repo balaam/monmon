@@ -5,6 +5,7 @@ using System.Text;
 using ScintillaNet;
 using System.IO;
 using System.Windows.Forms;
+using Einfall.Editor.Lua;
 
 namespace MonMon
 {
@@ -13,6 +14,7 @@ namespace MonMon
         string _name;
         string _path;
         Scintilla _scintilla;
+        AutoFormat _autoFormat = new AutoFormat();
 
         // Has the file been modified from the file on disk
         bool _modified = false;
@@ -73,7 +75,32 @@ namespace MonMon
         {
             _name = name;
             _scintilla = scintilla;
+            
+            // This will handle intellisense type stuff
+            _scintilla.CharAdded += new EventHandler<CharAddedEventArgs>(OnScintillaCharAdded);
         }
+
+        void OnScintillaCharAdded(object sender, CharAddedEventArgs e)
+        {
+            Scintilla scintilla = (Scintilla)sender;
+
+            // No need to do intellisense in comments (this check doesnt work)
+            if (scintilla.PositionIsOnComment(scintilla.CurrentPos))
+            {
+                return;
+            }
+
+     
+            // If its the end of a function then add end
+            if (e.Ch == ')')
+            {
+                _autoFormat.OnClosingParenAdded(scintilla);
+
+            }
+        }
+
+
+
 
         internal void Save()
         {
