@@ -33,4 +33,5 @@ The project is currently very usable but in the early stages. This means there's
     * Sorting function display
     * Allow code to have the functions sorted.
     * Close multiple files from the file tab
+    * Change the numbers so they're not an awful light brown (same with braces)
  
