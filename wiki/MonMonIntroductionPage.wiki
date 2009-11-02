@@ -35,4 +35,5 @@ The project is currently very usable but in the early stages. This means there's
     * Close multiple files from the file tab
     * Change the numbers so they're not an awful light brown (same with braces)
     * Change awful 8 spaces? to a tab
+    * If something is already loaded just refresh it.
  
