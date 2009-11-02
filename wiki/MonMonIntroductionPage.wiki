@@ -32,4 +32,5 @@ The project is currently very usable but in the early stages. This means there's
     * Id broken function / malformed
     * Sorting function display
     * Allow code to have the functions sorted.
+    * Close multiple files from the file tab
  
