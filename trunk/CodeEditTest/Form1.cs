@@ -7,6 +7,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Forms;
 using System.IO;
+using System.Runtime.InteropServices;
+
 
 // Scintilla Specific
 using Einfall.Editor;
@@ -18,9 +20,14 @@ using MonMon.Utilities;
 
 namespace MonMon
 {
-    
+
+
     public partial class Form1 : Form
     {
+        [DllImport("user32.dll")]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool SetForegroundWindow(IntPtr hWnd);
+
         bool _debug = true;
         ICodeContext _codeContext;
         Selection _selection;
@@ -43,14 +50,7 @@ namespace MonMon
             this.KeyDown += new KeyEventHandler(this.OnKeyDownOnForm);
             _listBoxFindResults.DoubleClick += new EventHandler(OnDoubleClickFindResult);
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(OnThreadException);
-
-            foreach (string file in args)
-            {
-                if (file.EndsWith(".lua") && File.Exists(file))
-                {
-                    LoadFileFromPath(file);
-                }
-            }
+            LoadArgs(args);
             _functionListControl.ClickRefresh += new EventHandler(Refresh_Click);
             _functionListControl.DoubleClickFunctionList += new EventHandler(OnFunctionShortCutDblClicked);
             _openFilesControl.DoubleClickFileList += new EventHandler(OnFileListDoubleClicked);
@@ -244,12 +244,13 @@ namespace MonMon
             Scintilla scintilla = new Scintilla();
             scintilla.ConfigurationManager.CustomLocation = "lua.xml";
             scintilla.ConfigurationManager.Language = "lua";
-            
             scintilla.Dock = System.Windows.Forms.DockStyle.Fill;
             scintilla.Location = new System.Drawing.Point(3, 3);
             scintilla.Name = "_scintilla";
             scintilla.Scrolling.HorizontalWidth = 400;
-           // scintilla.set
+            scintilla.Indentation.IndentWidth = 4;
+            scintilla.Indentation.SmartIndentType = SmartIndent.Simple;
+            
             scintilla.Size = new System.Drawing.Size(570, 373);
             scintilla.Styles.BraceBad.FontName = "Verdana";
             scintilla.Styles.BraceLight.FontName = "Verdana";
@@ -268,7 +269,6 @@ namespace MonMon
             scintilla.AutoComplete.AutomaticLengthEntered = true;
             scintilla.MouseClick += new MouseEventHandler(OnScintillaMouseClick);
             scintilla.TextChanged += new EventHandler<EventArgs>(OnScintillaTextChanged);
-  
             scintilla.Focus();
             return scintilla;
         }
@@ -320,6 +320,7 @@ namespace MonMon
 
         private void LoadFileFromPath(string path)
         {
+            CloseTabByPath(path);
             string fullText = File.ReadAllText(path);
             
             TabData tabdata = CreateNewFileTab(System.IO.Path.GetFileName(path));
@@ -330,6 +331,25 @@ namespace MonMon
             tabdata.SetDiskHash(fullText.GetHashCode());
           
         }
+
+        private void CloseTabByPath(string path)
+        {
+            TabPage pageToRemove = null;
+            foreach(var keyValuePair in _tabData)
+            {
+                if(keyValuePair.Value.Path == path)
+                {
+                    pageToRemove = keyValuePair.Key;
+                    break;
+                }
+            }
+
+            if (pageToRemove != null)
+            {
+                CloseFile(pageToRemove);
+            }
+        }
+
 
         private void OnSaveClicked(object sender, EventArgs e)
         {
@@ -488,6 +508,40 @@ namespace MonMon
                 if (path.ToLower().EndsWith(".lua"))
                 {
                     LoadFileFromPath(path);
+                }
+            }
+        }
+
+        public delegate void LoadArgsCallback();
+
+        public void LoadArgsCrossThread(string[] args)
+        {
+            if (this.InvokeRequired)
+            {
+                LoadArgsCallback l = delegate()
+                {
+                    LoadArgs(args);
+                    this.BringToFront();
+                    this.Focus();
+                    SetForegroundWindow(this.Handle);
+                };
+                Invoke(l);
+
+            }
+            else
+            {
+                LoadArgs(args);
+            }
+        }
+
+        private void LoadArgs(string[] args)
+        {
+
+            foreach (string file in args)
+            {
+                if (file.EndsWith(".lua") && File.Exists(file))
+                {
+                    LoadFileFromPath(file);
                 }
             }
         }

@@ -12,10 +12,11 @@ namespace MonMon
     {
         Test_CodeTransformer _testCodeTransformer =new Test_CodeTransformer();
         Test_CodeContextLua _textCodeContextLua = new Test_CodeContextLua();
+        Test_AutoFormat _testAutoFormat = new Test_AutoFormat();
         public void Go()
         {
             //_testCodeTransformer.TestGetTextFromWhenIdNotPresent();
-            _textCodeContextLua.Test_FindFunction_MemberFunction();
+            _testAutoFormat.Test_PositionIsJustBeforeFunction_WithSingleSpace();
            // _testCodeTransformer.FindSecondLineIndex();
         }
 
