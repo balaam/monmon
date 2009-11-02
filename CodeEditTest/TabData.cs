@@ -97,6 +97,10 @@ namespace MonMon
                 _autoFormat.OnClosingParenAdded(scintilla);
 
             }
+            else if (e.Ch == '\r')
+            {
+               _autoFormat.OnEnterPressed(scintilla);
+            }
         }
 
 

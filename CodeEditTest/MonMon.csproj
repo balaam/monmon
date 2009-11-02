@@ -50,6 +50,8 @@
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
     <BootstrapperEnabled>true</BootstrapperEnabled>
+    <StartupObject>
+    </StartupObject>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -91,6 +93,7 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ArgumentsReceivedEventArgs.cs" />
     <Compile Include="CaretHistory.cs" />
     <Compile Include="FindAll.cs">
       <SubType>Form</SubType>
@@ -154,6 +157,7 @@
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
     <Compile Include="Settings.cs" />
+    <Compile Include="SingleInstance.cs" />
     <Compile Include="TabData.cs" />
     <Compile Include="TestRunner.cs" />
   </ItemGroup>

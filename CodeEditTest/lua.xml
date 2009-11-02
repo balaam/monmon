@@ -7,7 +7,7 @@
       </List>
     </AutoComplete>
 
-    <Indentation TabWidth="4" SmartIndentType="cpp" />
+ 
 
 
     <Lexer LineCommentPrefix="--" StreamCommentPrefix="--[[ " StreamCommentSuffix=" ]]" >

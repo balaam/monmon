@@ -8,7 +8,7 @@ using Einfall.Editor.Lua;
 namespace Einfall.Editor
 {
     [TestFixture]
-    class Test_AutoFormat
+    public class Test_AutoFormat
     {
         [Test]
         public void Test_FunctionDef_EmptyFile()
@@ -68,5 +68,33 @@ namespace Einfall.Editor
             int testPosition = 10;
             Assert.True(af.ShouldAutoFinishFunctionDef(testString, testPosition));
         }
+
+        [Test]
+        public void Test_PositionIsJustBeforeFunction()
+        {
+            AutoFormat af = new AutoFormat();
+            string testString = @"function()";
+            int testPosition = 9;
+            Assert.True(af.IsPosJustAfterFunction(testString, testPosition));
+        }
+
+        [Test]
+        public void Test_PositionIsJustBeforeFunction_WithSingleSpace()
+        {
+            AutoFormat af = new AutoFormat();
+            string testString = @"function( )";
+            int testPosition = 10;
+            Assert.True(af.IsPosJustAfterFunction(testString, testPosition));
+        }
+
+        [Test]
+        public void Test_PositionIsJustBeforeFunction_Malformed()
+        {
+            AutoFormat af = new AutoFormat();
+            string testString = @"function(function() )";
+            int testPosition = testString.Length-1;
+            Assert.True(af.IsPosJustAfterFunction(testString, testPosition));
+        }
+
     }
 }
