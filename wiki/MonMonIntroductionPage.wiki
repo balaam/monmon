@@ -25,7 +25,7 @@ The project is currently very usable but in the early stages. This means there's
   * Function listing
   * Full syntax highlighting for LUA
 
-= Coming features =
+== Coming features ==
 
   * More comphrehsive function listing 
     * Ordering
@@ -35,5 +35,9 @@ The project is currently very usable but in the early stages. This means there's
     * Close multiple files from the file tab
     * Change the numbers so they're not an awful light brown (same with braces)
     * Change awful 8 spaces? to a tab
+
+
+= Done =
     * If something is already loaded just refresh it.
+    * One instance of the program, everything opens in that.
  
