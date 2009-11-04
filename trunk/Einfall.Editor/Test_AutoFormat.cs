@@ -93,6 +93,15 @@ namespace Einfall.Editor
             AutoFormat af = new AutoFormat();
             string testString = @"function(function() )";
             int testPosition = testString.Length-1;
+            Assert.False(af.IsPosJustAfterFunction(testString, testPosition));
+        }
+
+        [Test]
+        public void Test_PositionIsJustBeforeFunction_PreSpacing()
+        {
+            AutoFormat af = new AutoFormat();
+            string testString = @"           function()";
+            int testPosition = testString.Length - 1;
             Assert.True(af.IsPosJustAfterFunction(testString, testPosition));
         }
 

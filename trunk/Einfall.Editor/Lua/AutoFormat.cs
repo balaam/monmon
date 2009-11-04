@@ -29,28 +29,26 @@ namespace Einfall.Editor.Lua
         {
             // function()\r\n 12
             // -3 puts the character to before the return
+            int justBeforeFunction = scintilla.CurrentPos - 3;
             int functionStart;
-            if (IsPosJustAfterFunction(scintilla.Text, scintilla.CurrentPos-3, out functionStart))
+            if (justBeforeFunction != -1 &&
+                IsPosJustAfterFunction(scintilla.Text, justBeforeFunction, out functionStart))
             {
-
-                //
-                // At the moment this doesn't work
-                // because it's being overridden by smart indent.
-                // need to find a work around or write my own smart indentor
-
-
-
                 // Find function position relative to the current line
                 // On the next line do the tab index equivalent.
-               // scintilla.InsertText("It works ok");
                 Line l = scintilla.Lines.FromPosition(functionStart);
-                int indentAmount = l.StartPosition - functionStart;
-                string s = new string(' ', indentAmount) + "    ";
-             
-                //scintilla.Text.Insert(scintilla.CurrentPos, s);
-          
-                scintilla.InsertText("    ");
-             
+                int indentAmount = l.Indentation;      
+                // This should really be more clever and but in as many tabs as possible.
+                string s = new string(' ', indentAmount) + "\t";
+                scintilla.InsertText(s);
+            }
+            else
+            {
+                Line curLine = scintilla.Lines.Current;
+                if (!string.IsNullOrEmpty(curLine.Text))
+                    return;
+                curLine.Indentation = curLine.Previous.Indentation;
+                scintilla.CurrentPos = curLine.IndentPosition;
             }
         }
 
@@ -102,7 +100,7 @@ namespace Einfall.Editor.Lua
                 return false;
             }
 
-            string functionCut = code.Substring(functionStart, position);
+            string functionCut = code.Substring(functionStart, position - functionStart);
 
             if (functionCut == "function")
             {
