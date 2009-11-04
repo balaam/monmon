@@ -244,13 +244,11 @@ namespace MonMon
             Scintilla scintilla = new Scintilla();
             scintilla.ConfigurationManager.CustomLocation = "lua.xml";
             scintilla.ConfigurationManager.Language = "lua";
+            
             scintilla.Dock = System.Windows.Forms.DockStyle.Fill;
             scintilla.Location = new System.Drawing.Point(3, 3);
             scintilla.Name = "_scintilla";
             scintilla.Scrolling.HorizontalWidth = 400;
-            scintilla.Indentation.IndentWidth = 4;
-            scintilla.Indentation.SmartIndentType = SmartIndent.Simple;
-            
             scintilla.Size = new System.Drawing.Size(570, 373);
             scintilla.Styles.BraceBad.FontName = "Verdana";
             scintilla.Styles.BraceLight.FontName = "Verdana";
@@ -261,15 +259,23 @@ namespace MonMon
             scintilla.Styles.LineNumber.FontName = "Verdana";
             scintilla.Styles.Max.FontName = "Verdana";
             scintilla.TabIndex = 1;
+            scintilla.Indentation.TabIndents    = true;
+            //scintilla.Indentation.IndentWidth   = 4;
+            scintilla.Indentation.TabWidth = 6;
+            
+        //    scintilla.Indentation.UseTabs       = true;
+
+            
             scintilla.PreviewKeyDown += new PreviewKeyDownEventHandler(OnPreviewScintillaKeyDown);
             scintilla.KeyUp += new KeyEventHandler(OnScintillaKeyUp);
-            scintilla.Margins[0].Width = 20; // some room for line numbers
+            scintilla.Margins[0].Width = 35; // some room for line numbers
             //ScintillaNet.Configuration.Builtin.LexerKeywordListNames.lua.txt
             scintilla.AutoComplete.AutoHide = false;
             scintilla.AutoComplete.AutomaticLengthEntered = true;
             scintilla.MouseClick += new MouseEventHandler(OnScintillaMouseClick);
             scintilla.TextChanged += new EventHandler<EventArgs>(OnScintillaTextChanged);
             scintilla.Focus();
+            
             return scintilla;
         }
 
