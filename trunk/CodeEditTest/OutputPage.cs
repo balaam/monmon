@@ -15,6 +15,32 @@ namespace MonMon
         public OutputPage()
         {
             InitializeComponent();
+            _listBoxFindResults.DoubleClick += delegate(object sender, EventArgs eventArgs)
+            {
+                OnDblClickFindResult(sender, eventArgs);
+            };
+        }
+
+        public event EventHandler OnDblClickFindResult;
+
+        internal void Clear()
+        {
+            _listBoxFindResults.Items.Clear();
+        }
+
+        internal void AddFindResults(FindResult[] findResult)
+        {
+            _listBoxFindResults.Items.AddRange(findResult);
+        }
+
+        internal FindResult GetSelectedFindResult()
+        {
+            if (_listBoxFindResults.SelectedItem == null)
+            {
+                return null;
+            }
+
+            return (FindResult)_listBoxFindResults.SelectedItem;
         }
     }
 }

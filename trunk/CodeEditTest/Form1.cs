@@ -32,18 +32,14 @@ namespace MonMon
         private static MRUManager<string> _mruManager = new MRUManager<string>("Paths", 10);
       
         List<CaretHistory> _caretHistory = new List<CaretHistory>();
-        int _caretIndex = -1;
         FindAll _findAllDialog = new FindAll();
         List<FindResult> _findResults = new List<FindResult>();
-
-
-
-        //Dictionary<TabPage, TabData> _tabData = new Dictionary<TabPage, TabData>();
         List<CodePage> _codePageList = new List<CodePage>();
 
         // Helper Windows
-        FunctionPage _functionPage = new FunctionPage();
-        FilePage _filePage = new FilePage();
+        FunctionPage _functionPage  = new FunctionPage();
+        FilePage _filePage          = new FilePage();
+        OutputPage _outputPage      = new OutputPage();
 
         public MonMonMainForm(string[] args)
         {
@@ -55,15 +51,19 @@ namespace MonMon
             //!_tabControl.MouseDown += new MouseEventHandler(OnMouseDownOnTab);
             this.KeyPreview = true;
             this.KeyDown += new KeyEventHandler(this.OnKeyDownOnForm);
-            //!_listBoxFindResults.DoubleClick += new EventHandler(OnDoubleClickFindResult);
+
+        
+
             Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(OnThreadException);
             LoadArgs(args);
-            //!_functionListControl.ClickRefresh += new EventHandler(Refresh_Click);
-            //!_functionListControl.DoubleClickFunctionList += new EventHandler(OnFunctionShortCutDblClicked);
-            //!_openFilesControl.DoubleClickFileList += new EventHandler(OnFileListDoubleClicked);
+            _functionPage.OnRefreshClicked += new EventHandler(Refresh_Click);
+            _functionPage.OnFunctionDblClicked += new EventHandler(OnFunctionShortCutDblClicked);
             _functionPage.Show(_dockPanel);
-            _filePage.Show(_dockPanel);
 
+            _filePage.DoubleClickFileList += new EventHandler(OnFileListDoubleClicked);
+            _filePage.Show(_dockPanel);
+            _outputPage.Show(_dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
+            _outputPage.OnDblClickFindResult += new EventHandler(OnDoubleClickFindResult);
         }
 
 
@@ -84,65 +84,68 @@ namespace MonMon
 
         void OnDoubleClickFindResult(object sender, EventArgs e)
         {
-            //!
-            /*
-            if (_listBoxFindResults.SelectedItem == null)
+            FindResult findResult = _outputPage.GetSelectedFindResult();
+            
+            if(findResult == null)
             {
                 return;
             }
-
-            FindResult findResult = (FindResult)_listBoxFindResults.SelectedItem;
-            _tabControl.SelectedTab = findResult.TabPage;
-            _tabData[_tabControl.SelectedTab].Scintilla.GoTo.Position(findResult.Start);
-            _tabControl.Focus();
-            _tabData[_tabControl.SelectedTab].Scintilla.Focus();
-             */
+            
+            findResult.CodePage.Show();
+            findResult.CodePage.Scintilla.GoTo.Position(findResult.Start);
         }
 
         // This should be more generalized
         private void OnKeyDownOnForm(object sender, KeyEventArgs e)
         {
-            //!
-            /*
             if (e.Control && e.Shift && e.KeyCode == Keys.F)
             {
                // Find all
 
                 // preload find all with selected text
-                if (_tabControl.SelectedTab != null)
+                CodePage cp = GetVisibleCodePage();
+                if (cp == null)
                 {
-                    string selectedText = _tabData[_tabControl.SelectedTab].Scintilla.Selection.Text;
-                    _findAllDialog.SetDefaultSearchString(selectedText);
+                    return; // nothing to search.
                 }
            
-               if (_findAllDialog.ShowDialog() == DialogResult.OK)
+                string selectedText = cp.Scintilla.Selection.Text;
+                if (!string.IsNullOrEmpty(selectedText))
+                {
+                    _findAllDialog.SetDefaultSearchString(selectedText);
+                }
+                else
+                {
+                    if (System.Windows.Forms.Clipboard.ContainsText())
+                    {
+                        _findAllDialog.SetDefaultSearchString(System.Windows.Forms.Clipboard.GetText());
+                    }
+                }
+                
+           
+               if (_findAllDialog.ShowDialog(this) == DialogResult.OK)
                {
                    FindAll(_findAllDialog.SearchString);
                }
             }
-             */
         }
 
         private void FindAll(string searchString)
         {
-            //!
-            /*
-            _listBoxFindResults.Items.Clear();
+            _outputPage.Clear();
             _findResults.Clear();
-            foreach (TabPage t in _tabControl.TabPages)
+
+            foreach (CodePage cp in _codePageList)
             {
-                List<Range> finds = _tabData[t].Scintilla.FindReplace.FindAll(searchString);
-
-                finds.ForEach(x => _findResults.Add(new FindResult(x.Start, x.End, t, _tabData[t].Path)));
+                List<Range> finds = cp.Scintilla.FindReplace.FindAll(searchString);
+                finds.ForEach(x => _findResults.Add(new FindResult(x.Start, x.End, cp)));
             }
-
-
-            _listBoxFindResults.Items.AddRange(_findResults.ToArray());
-             */
+            _outputPage.AddFindResults(_findResults.ToArray());
         }
 
         void OnMouseDownOnTab(object sender, MouseEventArgs e)
         {
+            
             //!
             /*
             if (e.Button == MouseButtons.Middle)
@@ -216,36 +219,33 @@ namespace MonMon
 
         private void Refresh_Click(object sender, EventArgs e)
         {
-            //!
-            /*
-            if (_tabControl.SelectedTab == null)
+            RefreshFunctionList();
+        }
+
+        private void RefreshFunctionList()
+        {
+            CodePage cp = GetVisibleCodePage();
+
+            if (cp == null)
             {
                 return;
             }
-            Scintilla scintilla = (Scintilla)_tabControl.SelectedTab.Controls[0];
-            
-            _codeContext.UpdateFunctionList(scintilla);
-  
-         
-            _functionListControl.Update(_codeContext.FunctionList);
-             */
+            _codeContext.UpdateFunctionList(cp.Scintilla);
+            _functionPage.Update(_codeContext.FunctionList);
         }
 
         private void OnNewClicked(object sender, EventArgs e)
         {
             CodePage cp = CreateCodePage("");
-            cp.Show(_dockPanel);
-            //!
-            //  _tabControl.TabPages[_tabControl.TabPages.Count - 1];
-            //CreateNewFileTab("Unnamed");
-        
+            cp.Show(_dockPanel);        
         }
 
         public CodePage GetVisibleCodePage()
         {
+          
             foreach (CodePage cp in _codePageList)
             {
-                if (!cp.IsHidden)
+                if (cp == _dockPanel.ActiveDocumentPane.ActiveContent)
                 {
                     return cp;
                 }
@@ -262,40 +262,17 @@ namespace MonMon
             page.Disposed += delegate(object sender, EventArgs e)
             {
                 _codePageList.Remove(page);
+                _filePage.Remove(page);
+            };
+            page.OnModifiedFlagChanged += delegate(object sender, EventArgs e)
+            {
+                _filePage.RefreshItem(page);
             };
             _codePageList.Add(page);
+            _filePage.Add(page);
             return page;
         }
 
-        private TabData CreateNewFileTab(string name)
-        {
-            return null;
-            //!
-            /*
-            TabPage tabPage = new TabPage(name);
-
-            Scintilla scintilla = CreateNewLuaScintilla();
-            tabPage.Controls.Add(scintilla);
-            _tabControl.Controls.Add(tabPage);
-            _tabControl.SelectedTab = tabPage;
-            tabPage.Focus();
-            scintilla.Focus();
-            TabData tabData = new TabData(name, scintilla);
-            _tabData.Add(tabPage, tabData);
-            _openFilesControl.AddFile(tabPage);
-            tabData.OnModifiedFlagChanged += delegate(object sender, EventArgs e)
-            {
-                tabPage.Text = tabData.Name;
-                _openFilesControl.RefreshItem(tabPage);
-               
-            };
-            tabData.SetModifiedFlag(true);
-         
-            return _tabData[tabPage];
-             */
-        }
-
-  
         private Scintilla CreateNewLuaScintilla()
         {
             Scintilla scintilla = new Scintilla();
@@ -320,60 +297,20 @@ namespace MonMon
 
             scintilla.TabIndex = 1;
             scintilla.Indentation.TabIndents    = true;
-            //scintilla.Indentation.IndentWidth   = 4;
             scintilla.Indentation.TabWidth = 6;
-            
-        //    scintilla.Indentation.UseTabs       = true;
-
-            
             scintilla.PreviewKeyDown += new PreviewKeyDownEventHandler(OnPreviewScintillaKeyDown);
             scintilla.KeyUp += new KeyEventHandler(OnScintillaKeyUp);
             scintilla.Margins[0].Width = 35; // some room for line numbers
-            //ScintillaNet.Configuration.Builtin.LexerKeywordListNames.lua.txt
             scintilla.AutoComplete.AutoHide = false;
             scintilla.AutoComplete.AutomaticLengthEntered = true;
-            scintilla.MouseClick += new MouseEventHandler(OnScintillaMouseClick);
-            scintilla.TextChanged += new EventHandler<EventArgs>(OnScintillaTextChanged);
+          
+    
             scintilla.Focus();
             
             return scintilla;
         }
 
-        void OnScintillaTextChanged(object sender, EventArgs e)
-        {
-            //!
-            /*
-            Scintilla scintilla = (Scintilla) sender;
-            
-            // This could go a little wrong, in say mass find replace?
-            if (_tabControl.SelectedTab == null)
-            {
-                return;
-            }
-
-            bool same = scintilla.Text.GetHashCode() == _tabData[_tabControl.SelectedTab].DiskHash;
-
-            _tabData[_tabControl.SelectedTab].SetModifiedFlag(!same);
-            */
-        }
-
-  
-
-        void OnScintillaMouseClick(object sender, MouseEventArgs e)
-        {
-            //!
-            /*
-            Scintilla scintilla = (Scintilla)sender;
-            
-            int cursorPosition = scintilla.PositionFromPoint(e.X, e.Y);
       
-            if (cursorPosition != -1)
-            {
-                _caretHistory.Add(new CaretHistory(_tabControl.SelectedTab, cursorPosition));
-                _caretIndex = _caretHistory.Count - 1;
-            }
-             */
-        }
 
         private void OnOpenFile(object sender, EventArgs e)
         {
@@ -397,72 +334,60 @@ namespace MonMon
             CodePage codePage = CreateCodePage(fullText);
             codePage.Show(_dockPanel);
             codePage.Path = path;
+            RefreshFunctionList();
         }
 
 
 
         private void OnSaveClicked(object sender, EventArgs e)
         {
-            //!
-            /*
-            if (_tabControl.SelectedTab == null)
+            
+            CodePage cp = GetVisibleCodePage();
+            if (cp == null)
             {
                 return;
             }
 
-            _tabData[_tabControl.SelectedTab].Save();
-            _statusLabel.Text = "Saved " + _tabData[_tabControl.SelectedTab].Name;
-             */
+            cp.Save();
+            //!_statusLabel.Text = "Saved " + _tabData[_tabControl.SelectedTab].Name;
+            
         }
 
         private void OnSaveAllClicked(object sender, EventArgs e)
         {
-            //!
-            /*
+            
+           
             // Base save all on what the user is seeing.
-            foreach (TabPage page in _tabControl.TabPages)
+            foreach (CodePage cp in _codePageList)
             {
-                _tabData[page].Save();
-                _statusLabel.Text = "Saved " + _tabData[page].Name;
+                cp.Save();
+                //!_statusLabel.Text = "Saved " + _tabData[page].Name;
             }
-             */
+             
         }
 
         private void OnCloseFileClicked(object sender, EventArgs e)
         {
-            //!
-            /*
-            if (_tabControl.SelectedTab == null)
+            
+            CodePage cp = GetVisibleCodePage();
+            if (cp == null)
             {
                 return;
             }
-
-            CloseFile(_tabControl.SelectedTab);
-             */
-        }
-
-        private void CloseFile(TabPage tabPage)
-        {
-            //!
-            /*
-            _openFilesControl.RemoveFile(tabPage);
-            _tabData.Remove(tabPage); // probably should be a save prompt.
-            _tabControl.TabPages.Remove(tabPage);
-           
-            tabPage.Dispose();
-             */
+            cp.Close();
         }
 
         private void OnGotoToPreviousCursorPosition(object sender, EventArgs e)
         {
-            //!
-            /*
+            
+            
             // I think this can be done by extending the navigation points
             // override the push create a wrapper around the nav point
             // this allows me to compare the scintillas and decide what tab it came from.
-            if (_tabControl.SelectedTab != null)
-            { 
-                Scintilla scintilla = _tabData[_tabControl.SelectedTab].Scintilla;
+            CodePage cp = GetVisibleCodePage();
+            if (cp != null)
+            {
+                Scintilla scintilla = cp.Scintilla;
          //       DocumentNavigation.NavigationPont point = scintilla.DocumentNavigation.BackwardStack.Pop();
                 
                 if (scintilla.DocumentNavigation.CanNavigateBackward)
@@ -471,30 +396,30 @@ namespace MonMon
                     scintilla.DocumentNavigation.NavigateBackward();
                 }
             }
-             */
+             
         }
 
         private void OnGotoNextCursorPosition(object sender, EventArgs e)
         {
-            //!
-            /*
-            if (_tabControl.SelectedTab != null)
+       
+            CodePage cp = GetVisibleCodePage();
+            if (cp != null)
             {
-                Scintilla scintilla = _tabData[_tabControl.SelectedTab].Scintilla;
+                Scintilla scintilla = cp.Scintilla;
                
                 if (scintilla.DocumentNavigation.CanNavigateForward)
                 {
                     scintilla.DocumentNavigation.NavigateForward();
                 }
             }
-             */
+             
             
         }
 
         void OnFileListDoubleClicked(object sender, EventArgs e)
         {
-            //!
-            /*
+            
+            
             ListBox fileListBox = (ListBox)sender;
 
             if (fileListBox.SelectedItem == null)
@@ -503,31 +428,32 @@ namespace MonMon
             }
 
             string name =(string) fileListBox.SelectedItem;
-            TabPage t = null;
-            foreach (TabPage page in _tabControl.TabPages)
+            CodePage cp = null;
+            foreach (CodePage page in _codePageList)
             {
                 if (name == page.Text)
                 {
-                    t = page;
+                    cp = page;
                     break;
                 }
             }
 
-            if (t == null)
+            if (cp == null)
             {
                 return;
             }
 
-            _tabControl.SelectedTab = t;
-            _tabControl.Focus();
-            _tabData[_tabControl.SelectedTab].Scintilla.Focus();
-             */
+     
+            cp.Show();
+            cp.Focus();
+            cp.Scintilla.Focus();
+             
         }
 
         private void OnFunctionShortCutDblClicked(object sender, EventArgs e)
         {
-            //!
-            /*
+            
+            
             ListBox functionListBox = (ListBox)sender;
 
             if (functionListBox.SelectedItem == null)
@@ -537,10 +463,18 @@ namespace MonMon
 
             FunctionMetaData functionData = (FunctionMetaData)functionListBox.SelectedItem;
 
-            _tabData[_tabControl.SelectedTab].Scintilla.GoTo.Line(functionData.StartLine);
-            _tabControl.Focus();
-            _tabData[_tabControl.SelectedTab].Scintilla.Focus();
-             */
+            CodePage cp = GetVisibleCodePage();
+            if(cp == null)
+            {
+                return;
+            }
+
+            // Assume code page is correct for function list, this isn't guaranteed.
+
+            cp.Scintilla.GoTo.Line(functionData.StartLine);
+            cp.Focus();
+            cp.Scintilla.Focus();
+            
         }
 
         private void OnFormDragOver(object sender, DragEventArgs e)

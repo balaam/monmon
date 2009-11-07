@@ -11,37 +11,39 @@ namespace MonMon
 {
     public partial class OpenFilesList : UserControl
     {
-        List<TabPage> _fullList = new List<TabPage>();
+        List<CodePage> _fullList = new List<CodePage>();
         public event EventHandler DoubleClickFileList;
         public OpenFilesList()
         {
             InitializeComponent();
         }
 
-        public void AddFile(TabPage tabData)
+        public void AddFile(CodePage codePage)
         {
-            _fullList.Add(tabData);
+            _fullList.Add(codePage);
             RefreshFilter();
         }
 
-        public void RemoveFile(TabPage tabData)
+        public void RemoveFile(CodePage codePage)
         {
-            _fullList.Remove(tabData);
+            _fullList.Remove(codePage);
             RefreshFilter();
         }
 
-        public void RefreshItem(TabPage tabPage)
+        public void RefreshItem(CodePage codePage)
         {
-            int index = _fullList.FindIndex(x => x == tabPage);
-            _fullList[index] = tabPage;
+            int index = _fullList.FindIndex(x => x == codePage);
+            _fullList[index] = codePage;
             RefreshFilter();
         }
+
+
 
         public void RefreshFilter()
         {
             _fileListBox.Items.Clear();
 
-            foreach (TabPage page in _fullList)
+            foreach (CodePage page in _fullList)
             {
                 if (_textBoxFilter.Text == "")
                 {
@@ -63,5 +65,7 @@ namespace MonMon
         {
             DoubleClickFileList(sender, e);
         }
+
+   
     }
 }
