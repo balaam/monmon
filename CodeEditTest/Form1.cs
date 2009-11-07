@@ -14,7 +14,7 @@ using System.Runtime.InteropServices;
 using Einfall.Editor;
 using Einfall.Editor.Lua;
 using ScintillaNet;
-
+using WeifenLuo.WinFormsUI.Docking;
 // Other bits
 using MonMon.Utilities;
 
@@ -30,6 +30,7 @@ namespace MonMon
         ICodeContext _codeContext;
         Selection _selection;
         private static MRUManager<string> _mruManager = new MRUManager<string>("Paths", 10);
+        private DeserializeDockContent _deserializeDockContent;
       
         List<CaretHistory> _caretHistory = new List<CaretHistory>();
         FindAll _findAllDialog = new FindAll();
@@ -44,6 +45,7 @@ namespace MonMon
         public MonMonMainForm(string[] args)
         {
             InitializeComponent();
+            _deserializeDockContent = new DeserializeDockContent(GetContentFromPersistString);
             _codeContext = new CodeContextLua();
             FillUpRecentFilesMenu();
             recentFilesToolStripMenuItem.DropDownItemClicked += new ToolStripItemClickedEventHandler(OnOpenRecentFile);
@@ -58,15 +60,71 @@ namespace MonMon
             LoadArgs(args);
             _functionPage.OnRefreshClicked += new EventHandler(Refresh_Click);
             _functionPage.OnFunctionDblClicked += new EventHandler(OnFunctionShortCutDblClicked);
-            _functionPage.Show(_dockPanel);
-
             _filePage.DoubleClickFileList += new EventHandler(OnFileListDoubleClicked);
-            _filePage.Show(_dockPanel);
-            _outputPage.Show(_dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
             _outputPage.OnDblClickFindResult += new EventHandler(OnDoubleClickFindResult);
         }
 
 
+        protected override void OnLoad(EventArgs e)
+        {
+            base.OnLoad(e);
+            string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+
+            if (File.Exists(configFile))
+            {
+                _dockPanel.LoadFromXml(configFile, _deserializeDockContent);
+                _functionPage.Show(_dockPanel);
+                _outputPage.Show(_dockPanel);
+                _filePage.Show(_dockPanel);
+            }
+            else
+            {
+                _functionPage.Show(_dockPanel);
+                _outputPage.Show(_dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
+                _filePage.Show(_dockPanel);
+            }
+        }
+
+        private IDockContent GetContentFromPersistString(string persistString)
+        {
+            if (persistString == typeof(FunctionPage).ToString())
+                return _functionPage;
+            else if (persistString == typeof(FilePage).ToString())
+                return _filePage;
+            else if (persistString == typeof(OutputPage).ToString())
+                return _outputPage;
+            else
+            {
+                /*
+                // DummyDoc overrides GetPersistString to add extra information into persistString.
+                // Any DockContent may override this value to add any needed information for deserialization.
+
+                string[] parsedStrings = persistString.Split(new char[] { ',' });
+                if (parsedStrings.Length != 3)
+                    return null;
+
+                if (parsedStrings[0] != typeof(DummyDoc).ToString())
+                    return null;
+
+                DummyDoc dummyDoc = new DummyDoc();
+                if (parsedStrings[1] != string.Empty)
+                    dummyDoc.FileName = parsedStrings[1];
+                if (parsedStrings[2] != string.Empty)
+                    dummyDoc.Text = parsedStrings[2];
+
+                return dummyDoc;
+                 */
+                return _outputPage;
+            }
+        }
+
+        protected override void OnClosing(CancelEventArgs e)
+        {
+            string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
+            _dockPanel.SaveAsXml(configFile);
+            base.OnClosing(e);
+        }
+  
 
         void OnThreadException(object sender, System.Threading.ThreadExceptionEventArgs e)
         {
@@ -563,6 +621,16 @@ namespace MonMon
         {
             AboutBox aboutBox = new AboutBox();
             aboutBox.Show();
+        }
+
+        private void OnClickOnShowFiles(object sender, EventArgs e)
+        {
+            _filePage.Show(_dockPanel);
+        }
+
+        private void OnClickOnShowOutput(object sender, EventArgs e)
+        {
+            _outputPage.Show(_dockPanel);
         }
     }
 }
