@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.openFilesList1 = new MonMon.OpenFilesList();
+            this._openFileListControl = new MonMon.OpenFilesList();
             this.SuspendLayout();
             // 
             // openFilesList1
             // 
-            this.openFilesList1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.openFilesList1.Location = new System.Drawing.Point(0, 0);
-            this.openFilesList1.Name = "openFilesList1";
-            this.openFilesList1.Size = new System.Drawing.Size(284, 264);
-            this.openFilesList1.TabIndex = 0;
+            this._openFileListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._openFileListControl.Location = new System.Drawing.Point(0, 0);
+            this._openFileListControl.Name = "openFilesList1";
+            this._openFileListControl.Size = new System.Drawing.Size(284, 264);
+            this._openFileListControl.TabIndex = 0;
             // 
             // FilePage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 264);
-            this.Controls.Add(this.openFilesList1);
+            this.Controls.Add(this._openFileListControl);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
@@ -58,6 +58,6 @@
 
         #endregion
 
-        private OpenFilesList openFilesList1;
+        private OpenFilesList _openFileListControl;
     }
 }

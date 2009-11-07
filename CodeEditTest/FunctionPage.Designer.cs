@@ -28,23 +28,23 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.functionList1 = new MonMon.FunctionList();
+            this._functionListControl = new MonMon.FunctionList();
             this.SuspendLayout();
             // 
             // functionList1
             // 
-            this.functionList1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.functionList1.Location = new System.Drawing.Point(0, 0);
-            this.functionList1.Name = "functionList1";
-            this.functionList1.Size = new System.Drawing.Size(284, 264);
-            this.functionList1.TabIndex = 0;
+            this._functionListControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._functionListControl.Location = new System.Drawing.Point(0, 0);
+            this._functionListControl.Name = "functionList1";
+            this._functionListControl.Size = new System.Drawing.Size(284, 264);
+            this._functionListControl.TabIndex = 0;
             // 
             // FunctionPage
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(284, 264);
-            this.Controls.Add(this.functionList1);
+            this.Controls.Add(this._functionListControl);
             this.DockAreas = ((WeifenLuo.WinFormsUI.Docking.DockAreas)(((((WeifenLuo.WinFormsUI.Docking.DockAreas.Float | WeifenLuo.WinFormsUI.Docking.DockAreas.DockLeft)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockRight)
                         | WeifenLuo.WinFormsUI.Docking.DockAreas.DockTop)
@@ -58,6 +58,6 @@
 
         #endregion
 
-        private FunctionList functionList1;
+        private FunctionList _functionListControl;
     }
 }

@@ -111,12 +111,6 @@
     <Compile Include="CodePage.Designer.cs">
       <DependentUpon>CodePage.cs</DependentUpon>
     </Compile>
-    <Compile Include="DockTest.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="DockTest.Designer.cs">
-      <DependentUpon>DockTest.cs</DependentUpon>
-    </Compile>
     <Compile Include="FilePage.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -169,9 +163,6 @@
     <EmbeddedResource Include="CodePage.resx">
       <DependentUpon>CodePage.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="DockTest.resx">
-      <DependentUpon>DockTest.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="FilePage.resx">
       <DependentUpon>FilePage.cs</DependentUpon>
     </EmbeddedResource>
@@ -216,7 +207,6 @@
     </Compile>
     <Compile Include="Settings.cs" />
     <Compile Include="SingleInstance.cs" />
-    <Compile Include="TabData.cs" />
     <Compile Include="TestRunner.cs" />
   </ItemGroup>
   <ItemGroup>

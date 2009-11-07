@@ -11,7 +11,7 @@ namespace MonMon
     {
         int _start;
         int _end;
-        TabPage _tabPage;
+        CodePage _codePage;
         string _filePath;
 
         public int Start
@@ -30,25 +30,25 @@ namespace MonMon
             }
         }
 
-        public TabPage TabPage
+        public CodePage CodePage
         {
             get
             {
-                return _tabPage;
+                return _codePage;
             }
         }
 
-        public FindResult(int start, int end, TabPage tabpage, string filePath)
+        public FindResult(int start, int end, CodePage cp)
         {
             _start = start;
             _end = end;
-            _tabPage = tabpage;
-            _filePath = filePath;
+            _codePage = cp;
+            _filePath = cp.Path;
         }
 
         public override string ToString()
         {
-            Scintilla scintilla = (Scintilla)_tabPage.Controls[0];
+            Scintilla scintilla = (Scintilla)_codePage.Controls[0];
             
             Line line = scintilla.Lines.FromPosition(_start);
             string locationInfo = _filePath + " (" + line.Number.ToString() + "):\t";

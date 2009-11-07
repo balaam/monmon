@@ -26,8 +26,6 @@ namespace MonMon
                     Application.SetCompatibleTextRenderingDefault(false);
                     TestRunner tr = new TestRunner();
                     tr.Go();
-                    DockTest _dockForm = new DockTest();
-                    _dockForm.Show();
                     _mainForm = new MonMonMainForm(args);
                     Application.Run(_mainForm);
                     
