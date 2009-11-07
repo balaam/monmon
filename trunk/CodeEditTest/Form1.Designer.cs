@@ -1,6 +1,6 @@
 ﻿namespace MonMon
 {
-    partial class Form1
+    partial class MonMonMainForm
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,22 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MonMonMainForm));
+            WeifenLuo.WinFormsUI.Docking.DockPanelSkin dockPanelSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPanelSkin();
+            WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin autoHideStripSkin1 = new WeifenLuo.WinFormsUI.Docking.AutoHideStripSkin();
+            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient1 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin dockPaneStripSkin1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripSkin();
+            WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient dockPaneStripGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient2 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient2 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient3 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient dockPaneStripToolWindowGradient1 = new WeifenLuo.WinFormsUI.Docking.DockPaneStripToolWindowGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient4 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient5 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.DockPanelGradient dockPanelGradient3 = new WeifenLuo.WinFormsUI.Docking.DockPanelGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient6 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
+            WeifenLuo.WinFormsUI.Docking.TabGradient tabGradient7 = new WeifenLuo.WinFormsUI.Docking.TabGradient();
             this._menuStrip = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -37,39 +52,25 @@
             this.saveAllToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.recentFilesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.closeToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.viewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.functionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._openFileDialog = new System.Windows.Forms.OpenFileDialog();
-            this.statusStrip1 = new System.Windows.Forms.StatusStrip();
-            this._statusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStrip1 = new System.Windows.Forms.ToolStrip();
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
-            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this._tabControlView = new System.Windows.Forms.TabControl();
-            this._tabPageFunctionList = new System.Windows.Forms.TabPage();
-            this._tabPageFiles = new System.Windows.Forms.TabPage();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
-            this._tabControl = new System.Windows.Forms.TabControl();
-            this._listBoxFindResults = new System.Windows.Forms.ListBox();
-            this._functionListControl = new MonMon.FunctionList();
-            this._openFilesControl = new MonMon.OpenFilesList();
+            this._dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+            this.helpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this._menuStrip.SuspendLayout();
-            this.statusStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.splitContainer1.Panel1.SuspendLayout();
-            this.splitContainer1.Panel2.SuspendLayout();
-            this.splitContainer1.SuspendLayout();
-            this._tabControlView.SuspendLayout();
-            this._tabPageFunctionList.SuspendLayout();
-            this._tabPageFiles.SuspendLayout();
-            this.splitContainer2.Panel1.SuspendLayout();
-            this.splitContainer2.Panel2.SuspendLayout();
-            this.splitContainer2.SuspendLayout();
             this.SuspendLayout();
             // 
             // _menuStrip
             // 
             this._menuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.fileToolStripMenuItem});
+            this.fileToolStripMenuItem,
+            this.viewToolStripMenuItem,
+            this.helpToolStripMenuItem});
             this._menuStrip.Location = new System.Drawing.Point(0, 0);
             this._menuStrip.Name = "_menuStrip";
             this._menuStrip.Size = new System.Drawing.Size(723, 24);
@@ -135,28 +136,27 @@
             this.closeToolStripMenuItem.Text = "&Close";
             this.closeToolStripMenuItem.Click += new System.EventHandler(this.OnCloseFileClicked);
             // 
+            // viewToolStripMenuItem
+            // 
+            this.viewToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.functionsToolStripMenuItem});
+            this.viewToolStripMenuItem.Name = "viewToolStripMenuItem";
+            this.viewToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.viewToolStripMenuItem.Text = "View";
+            // 
+            // functionsToolStripMenuItem
+            // 
+            this.functionsToolStripMenuItem.Name = "functionsToolStripMenuItem";
+            this.functionsToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.functionsToolStripMenuItem.Text = "Functions";
+            this.functionsToolStripMenuItem.Click += new System.EventHandler(this.OnClickShowFunctionList);
+            // 
             // _openFileDialog
             // 
             this._openFileDialog.DefaultExt = "lua";
             this._openFileDialog.Filter = "Lua files|*.lua|All files|*.*";
             this._openFileDialog.Multiselect = true;
             this._openFileDialog.RestoreDirectory = true;
-            // 
-            // statusStrip1
-            // 
-            this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this._statusLabel});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 478);
-            this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(723, 22);
-            this.statusStrip1.TabIndex = 6;
-            this.statusStrip1.Text = "statusStrip1";
-            // 
-            // _statusLabel
-            // 
-            this._statusLabel.Name = "_statusLabel";
-            this._statusLabel.Size = new System.Drawing.Size(118, 17);
-            this._statusLabel.Text = "toolStripStatusLabel1";
             // 
             // toolStrip1
             // 
@@ -189,141 +189,96 @@
             this.toolStripButton2.Text = "toolStripButton2";
             this.toolStripButton2.Click += new System.EventHandler(this.OnGotoNextCursorPosition);
             // 
-            // splitContainer1
+            // _dockPanel
             // 
-            this.splitContainer1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer1.Location = new System.Drawing.Point(0, 49);
-            this.splitContainer1.Name = "splitContainer1";
+            this._dockPanel.ActiveAutoHideContent = null;
+            this._dockPanel.BackColor = System.Drawing.SystemColors.ControlDark;
+            this._dockPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._dockPanel.DockBackColor = System.Drawing.SystemColors.ControlDark;
+            this._dockPanel.Location = new System.Drawing.Point(0, 49);
+            this._dockPanel.Name = "_dockPanel";
+            this._dockPanel.Size = new System.Drawing.Size(723, 451);
+            dockPanelGradient1.EndColor = System.Drawing.SystemColors.ControlLight;
+            dockPanelGradient1.StartColor = System.Drawing.SystemColors.ControlLight;
+            autoHideStripSkin1.DockStripGradient = dockPanelGradient1;
+            tabGradient1.EndColor = System.Drawing.SystemColors.Control;
+            tabGradient1.StartColor = System.Drawing.SystemColors.Control;
+            tabGradient1.TextColor = System.Drawing.SystemColors.ControlDarkDark;
+            autoHideStripSkin1.TabGradient = tabGradient1;
+            dockPanelSkin1.AutoHideStripSkin = autoHideStripSkin1;
+            tabGradient2.EndColor = System.Drawing.SystemColors.ControlLightLight;
+            tabGradient2.StartColor = System.Drawing.SystemColors.ControlLightLight;
+            tabGradient2.TextColor = System.Drawing.SystemColors.ControlText;
+            dockPaneStripGradient1.ActiveTabGradient = tabGradient2;
+            dockPanelGradient2.EndColor = System.Drawing.SystemColors.Control;
+            dockPanelGradient2.StartColor = System.Drawing.SystemColors.Control;
+            dockPaneStripGradient1.DockStripGradient = dockPanelGradient2;
+            tabGradient3.EndColor = System.Drawing.SystemColors.ControlLight;
+            tabGradient3.StartColor = System.Drawing.SystemColors.ControlLight;
+            tabGradient3.TextColor = System.Drawing.SystemColors.ControlText;
+            dockPaneStripGradient1.InactiveTabGradient = tabGradient3;
+            dockPaneStripSkin1.DocumentGradient = dockPaneStripGradient1;
+            tabGradient4.EndColor = System.Drawing.SystemColors.ActiveCaption;
+            tabGradient4.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            tabGradient4.StartColor = System.Drawing.SystemColors.GradientActiveCaption;
+            tabGradient4.TextColor = System.Drawing.SystemColors.ActiveCaptionText;
+            dockPaneStripToolWindowGradient1.ActiveCaptionGradient = tabGradient4;
+            tabGradient5.EndColor = System.Drawing.SystemColors.Control;
+            tabGradient5.StartColor = System.Drawing.SystemColors.Control;
+            tabGradient5.TextColor = System.Drawing.SystemColors.ControlText;
+            dockPaneStripToolWindowGradient1.ActiveTabGradient = tabGradient5;
+            dockPanelGradient3.EndColor = System.Drawing.SystemColors.ControlLight;
+            dockPanelGradient3.StartColor = System.Drawing.SystemColors.ControlLight;
+            dockPaneStripToolWindowGradient1.DockStripGradient = dockPanelGradient3;
+            tabGradient6.EndColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            tabGradient6.LinearGradientMode = System.Drawing.Drawing2D.LinearGradientMode.Vertical;
+            tabGradient6.StartColor = System.Drawing.SystemColors.GradientInactiveCaption;
+            tabGradient6.TextColor = System.Drawing.SystemColors.ControlText;
+            dockPaneStripToolWindowGradient1.InactiveCaptionGradient = tabGradient6;
+            tabGradient7.EndColor = System.Drawing.Color.Transparent;
+            tabGradient7.StartColor = System.Drawing.Color.Transparent;
+            tabGradient7.TextColor = System.Drawing.SystemColors.ControlDarkDark;
+            dockPaneStripToolWindowGradient1.InactiveTabGradient = tabGradient7;
+            dockPaneStripSkin1.ToolWindowGradient = dockPaneStripToolWindowGradient1;
+            dockPanelSkin1.DockPaneStripSkin = dockPaneStripSkin1;
+            this._dockPanel.Skin = dockPanelSkin1;
+            this._dockPanel.TabIndex = 8;
             // 
-            // splitContainer1.Panel1
+            // helpToolStripMenuItem
             // 
-            this.splitContainer1.Panel1.Controls.Add(this._tabControlView);
+            this.helpToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.aboutToolStripMenuItem});
+            this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(44, 20);
+            this.helpToolStripMenuItem.Text = "Help";
             // 
-            // splitContainer1.Panel2
+            // aboutToolStripMenuItem
             // 
-            this.splitContainer1.Panel2.Controls.Add(this.splitContainer2);
-            this.splitContainer1.Size = new System.Drawing.Size(723, 429);
-            this.splitContainer1.SplitterDistance = 122;
-            this.splitContainer1.TabIndex = 8;
+            this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            this.aboutToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.aboutToolStripMenuItem.Text = "About";
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.OnClickAbout);
             // 
-            // _tabControlView
-            // 
-            this._tabControlView.Controls.Add(this._tabPageFunctionList);
-            this._tabControlView.Controls.Add(this._tabPageFiles);
-            this._tabControlView.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._tabControlView.Location = new System.Drawing.Point(0, 0);
-            this._tabControlView.Multiline = true;
-            this._tabControlView.Name = "_tabControlView";
-            this._tabControlView.SelectedIndex = 0;
-            this._tabControlView.Size = new System.Drawing.Size(122, 429);
-            this._tabControlView.TabIndex = 4;
-            // 
-            // _tabPageFunctionList
-            // 
-            this._tabPageFunctionList.Controls.Add(this._functionListControl);
-            this._tabPageFunctionList.Location = new System.Drawing.Point(4, 22);
-            this._tabPageFunctionList.Name = "_tabPageFunctionList";
-            this._tabPageFunctionList.Padding = new System.Windows.Forms.Padding(3);
-            this._tabPageFunctionList.Size = new System.Drawing.Size(114, 403);
-            this._tabPageFunctionList.TabIndex = 0;
-            this._tabPageFunctionList.Text = "Functions";
-            this._tabPageFunctionList.UseVisualStyleBackColor = true;
-            // 
-            // _tabPageFiles
-            // 
-            this._tabPageFiles.Controls.Add(this._openFilesControl);
-            this._tabPageFiles.Location = new System.Drawing.Point(4, 22);
-            this._tabPageFiles.Name = "_tabPageFiles";
-            this._tabPageFiles.Padding = new System.Windows.Forms.Padding(3);
-            this._tabPageFiles.Size = new System.Drawing.Size(114, 403);
-            this._tabPageFiles.TabIndex = 1;
-            this._tabPageFiles.Text = "Files";
-            this._tabPageFiles.UseVisualStyleBackColor = true;
-            // 
-            // splitContainer2
-            // 
-            this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.splitContainer2.Location = new System.Drawing.Point(0, 0);
-            this.splitContainer2.Name = "splitContainer2";
-            this.splitContainer2.Orientation = System.Windows.Forms.Orientation.Horizontal;
-            // 
-            // splitContainer2.Panel1
-            // 
-            this.splitContainer2.Panel1.Controls.Add(this._tabControl);
-            // 
-            // splitContainer2.Panel2
-            // 
-            this.splitContainer2.Panel2.Controls.Add(this._listBoxFindResults);
-            this.splitContainer2.Size = new System.Drawing.Size(597, 429);
-            this.splitContainer2.SplitterDistance = 356;
-            this.splitContainer2.TabIndex = 0;
-            // 
-            // _tabControl
-            // 
-            this._tabControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._tabControl.Location = new System.Drawing.Point(0, 0);
-            this._tabControl.Margin = new System.Windows.Forms.Padding(2);
-            this._tabControl.Name = "_tabControl";
-            this._tabControl.Padding = new System.Drawing.Point(0, 0);
-            this._tabControl.SelectedIndex = 0;
-            this._tabControl.Size = new System.Drawing.Size(597, 356);
-            this._tabControl.TabIndex = 3;
-            // 
-            // _listBoxFindResults
-            // 
-            this._listBoxFindResults.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._listBoxFindResults.FormattingEnabled = true;
-            this._listBoxFindResults.Location = new System.Drawing.Point(0, 0);
-            this._listBoxFindResults.Name = "_listBoxFindResults";
-            this._listBoxFindResults.Size = new System.Drawing.Size(597, 69);
-            this._listBoxFindResults.TabIndex = 4;
-            // 
-            // _functionListControl
-            // 
-            this._functionListControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._functionListControl.Location = new System.Drawing.Point(3, 3);
-            this._functionListControl.Name = "_functionListControl";
-            this._functionListControl.Size = new System.Drawing.Size(108, 397);
-            this._functionListControl.TabIndex = 0;
-            // 
-            // _openFilesControl
-            // 
-            this._openFilesControl.Dock = System.Windows.Forms.DockStyle.Fill;
-            this._openFilesControl.Location = new System.Drawing.Point(3, 3);
-            this._openFilesControl.Name = "_openFilesControl";
-            this._openFilesControl.Size = new System.Drawing.Size(108, 397);
-            this._openFilesControl.TabIndex = 0;
-            // 
-            // Form1
+            // MonMonMainForm
             // 
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(723, 500);
-            this.Controls.Add(this.splitContainer1);
+            this.Controls.Add(this._dockPanel);
             this.Controls.Add(this.toolStrip1);
-            this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this._menuStrip);
+            this.IsMdiContainer = true;
             this.MainMenuStrip = this._menuStrip;
-            this.Name = "Form1";
+            this.Name = "MonMonMainForm";
             this.Text = "MonMon";
             this.DragDrop += new System.Windows.Forms.DragEventHandler(this.OnDragDropOnForm);
             this.DragOver += new System.Windows.Forms.DragEventHandler(this.OnFormDragOver);
             this._menuStrip.ResumeLayout(false);
             this._menuStrip.PerformLayout();
-            this.statusStrip1.ResumeLayout(false);
-            this.statusStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.splitContainer1.Panel1.ResumeLayout(false);
-            this.splitContainer1.Panel2.ResumeLayout(false);
-            this.splitContainer1.ResumeLayout(false);
-            this._tabControlView.ResumeLayout(false);
-            this._tabPageFunctionList.ResumeLayout(false);
-            this._tabPageFiles.ResumeLayout(false);
-            this.splitContainer2.Panel1.ResumeLayout(false);
-            this.splitContainer2.Panel2.ResumeLayout(false);
-            this.splitContainer2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -331,29 +286,23 @@
 
         #endregion
 
-        private System.Windows.Forms.TabControl _tabControl;
         private System.Windows.Forms.MenuStrip _menuStrip;
         private System.Windows.Forms.ToolStripMenuItem fileToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem newToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem openToolStripMenuItem;
-        private System.Windows.Forms.ListBox _listBoxFindResults;
         private System.Windows.Forms.OpenFileDialog _openFileDialog;
         private System.Windows.Forms.ToolStripMenuItem recentFilesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveAllToolStripMenuItem;
-        private System.Windows.Forms.StatusStrip statusStrip1;
-        private System.Windows.Forms.ToolStripStatusLabel _statusLabel;
         private System.Windows.Forms.ToolStripMenuItem closeToolStripMenuItem;
         private System.Windows.Forms.ToolStrip toolStrip1;
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
-        private System.Windows.Forms.SplitContainer splitContainer1;
-        private System.Windows.Forms.SplitContainer splitContainer2;
-        private System.Windows.Forms.TabControl _tabControlView;
-        private System.Windows.Forms.TabPage _tabPageFunctionList;
-        private System.Windows.Forms.TabPage _tabPageFiles;
-        private OpenFilesList _openFilesControl;
-        private FunctionList _functionListControl;
+        private WeifenLuo.WinFormsUI.Docking.DockPanel _dockPanel;
+        private System.Windows.Forms.ToolStripMenuItem viewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem functionsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem helpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
     }
 }
 
