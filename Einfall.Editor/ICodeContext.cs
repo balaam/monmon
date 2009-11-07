@@ -23,6 +23,12 @@ namespace Einfall.Editor
 
         void UpdateFunctionList(Scintilla scintilla);
 
+        /// <summary>
+        /// Set what colours the various bits and pieces should be.
+        /// </summary>
+        /// <param name="scintilla"></param>
+        void ApplyStyling(Scintilla scintilla);
+
         List<FunctionMetaData> FunctionList
         {
             get;

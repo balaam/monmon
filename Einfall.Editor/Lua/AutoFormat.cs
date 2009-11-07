@@ -28,27 +28,97 @@ namespace Einfall.Editor.Lua
         public void OnEnterPressed(Scintilla scintilla)
         {
             // function()\r\n 12
+            //          ^
             // -3 puts the character to before the return
-            int justBeforeFunction = scintilla.CurrentPos - 3;
+            int justBeforeNewline = scintilla.CurrentPos - 3;
+            
             int functionStart;
-            if (justBeforeFunction != -1 &&
-                IsPosJustAfterFunction(scintilla.Text, justBeforeFunction, out functionStart))
+            if (justBeforeNewline < 0)
             {
+                DoIndent(scintilla);
+                return;
+            }
+
+
+            if (IsPosJustAfterFunction(scintilla.Text, justBeforeNewline, out functionStart))
+            {
+                int previousStartPos =  scintilla.Lines.Current.Previous.StartPosition;
+                Debug.Assert(functionStart >= previousStartPos);
+                int offset = functionStart - previousStartPos;
+
+                for (int i = previousStartPos; i < functionStart; i++)
+                {
+                    if (scintilla.Text[i] == '\t')
+                    {
+                        offset += 3; // tabs are 4 spaces '\t' is 1 so plus 3
+                    }
+                }
                 // Find function position relative to the current line
                 // On the next line do the tab index equivalent.
-                Line l = scintilla.Lines.FromPosition(functionStart);
-                int indentAmount = l.Indentation;      
+                //Line l = scintilla.Lines.FromPosition(functionStart);
+                //int indentAmount = l.Indentation;
                 // This should really be more clever and but in as many tabs as possible.
-                string s = new string(' ', indentAmount) + "\t";
-                scintilla.InsertText(s);
+                //string s = new string(' ', indentAmount) + "\t";
+                scintilla.InsertText(new string(' ', offset) + '\t');
+            }
+            else if (IsPosJustAfterWord(scintilla.Text, "{", justBeforeNewline))
+            {
+                DoIndent(scintilla, "\t");
+            }
+            else if (IsPosJustAfterWord(scintilla.Text, "then", justBeforeNewline))
+            {
+                DoIndent(scintilla, "\t");
+            }
+            else if (IsPosJustAfterWord(scintilla.Text, "do", justBeforeNewline))
+            {
+                DoIndent(scintilla, "\t");
             }
             else
             {
-                Line curLine = scintilla.Lines.Current;
-                if (!string.IsNullOrEmpty(curLine.Text))
-                    return;
-                curLine.Indentation = curLine.Previous.Indentation;
-                scintilla.CurrentPos = curLine.IndentPosition;
+                DoIndent(scintilla);
+            }
+    
+        }
+
+        public bool IsPosJustAfterWord(string text, string word, int justBeforeNewline)
+        {
+            for (int i = word.Length - 1; i != -1; i--)
+            {
+                if (justBeforeNewline < 0)
+                {
+                    return false;
+                }
+
+                char wordChar = word[i];
+                char textChar = text[justBeforeNewline];
+
+                if (wordChar != textChar)
+                {
+                    return false;
+                }
+
+                justBeforeNewline--;
+
+         
+            }
+            return true;
+        }
+
+        private static void DoIndent(Scintilla scintilla)
+        {
+            DoIndent(scintilla, "");
+        }
+        private static void DoIndent(Scintilla scintilla, string extra)
+        {
+            Line curLine = scintilla.Lines.Current;
+            if (!string.IsNullOrEmpty(curLine.Text))
+                return;
+            curLine.Indentation = curLine.Previous.Indentation;
+            scintilla.CurrentPos = curLine.IndentPosition;
+
+            if (!string.IsNullOrEmpty(extra))
+            {
+                scintilla.InsertText(extra);
             }
         }
 
@@ -93,6 +163,57 @@ namespace Einfall.Editor.Lua
                 }
             }
 
+            // move to next character after '('
+            position = position - 1;
+            c = code[position];
+
+            if (position < 0)
+            {
+                return false;
+            }
+
+            while (Char.IsWhiteSpace(c))
+            {
+        
+                position = position - 1;
+                if (position < 0)
+                {
+                    return false;
+                }
+                c = code[position];
+            }
+
+            string functionId = "";
+            while (IsValidFunctionId(c))
+            {
+             
+
+                functionId = c + functionId;
+                position = position - 1;
+                if (position < 0)
+                {
+                    break;
+                }
+                c = code[position];
+            }
+
+            if (functionId == "function")
+            {
+                i = position+1;
+                return true;
+            }
+
+            while (Char.IsWhiteSpace(c))
+            { 
+                position = position - 1;
+                if (position < 0)
+                {
+                    return false;
+                }
+                c = code[position];
+            }
+
+            position = position + 1;
             int functionLength = "function".Length;
             int functionStart = position - functionLength;
             if (functionStart < 0)
@@ -111,6 +232,23 @@ namespace Einfall.Editor.Lua
             {
                 return false;
             }
+        }
+
+        private bool IsValidFunctionId(char c)
+        {
+            if (Char.IsLetterOrDigit(c))
+            {
+                return true;
+            }
+            else if (c == '.')
+            {
+                return true;
+            }
+            else if (c == ':')
+            {
+                return true;
+            }
+            return false;
         }
 
 

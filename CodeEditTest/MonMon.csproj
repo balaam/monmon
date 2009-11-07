@@ -88,13 +88,41 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.24483, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>.\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
+    </Reference>
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AboutBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="AboutBox.Designer.cs">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </Compile>
     <Compile Include="ArgumentsReceivedEventArgs.cs" />
     <Compile Include="CaretHistory.cs" />
+    <Compile Include="CodePage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CodePage.Designer.cs">
+      <DependentUpon>CodePage.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DockTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DockTest.Designer.cs">
+      <DependentUpon>DockTest.cs</DependentUpon>
+    </Compile>
+    <Compile Include="FilePage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FilePage.Designer.cs">
+      <DependentUpon>FilePage.cs</DependentUpon>
+    </Compile>
     <Compile Include="FindAll.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -114,6 +142,12 @@
     <Compile Include="FunctionList.Designer.cs">
       <DependentUpon>FunctionList.cs</DependentUpon>
     </Compile>
+    <Compile Include="FunctionPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FunctionPage.Designer.cs">
+      <DependentUpon>FunctionPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="MRUManager.cs" />
     <Compile Include="OpenFilesList.cs">
       <SubType>UserControl</SubType>
@@ -121,8 +155,26 @@
     <Compile Include="OpenFilesList.Designer.cs">
       <DependentUpon>OpenFilesList.cs</DependentUpon>
     </Compile>
+    <Compile Include="OutputPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="OutputPage.Designer.cs">
+      <DependentUpon>OutputPage.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="AboutBox.resx">
+      <DependentUpon>AboutBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CodePage.resx">
+      <DependentUpon>CodePage.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DockTest.resx">
+      <DependentUpon>DockTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FilePage.resx">
+      <DependentUpon>FilePage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FindAll.resx">
       <DependentUpon>FindAll.cs</DependentUpon>
     </EmbeddedResource>
@@ -133,8 +185,14 @@
     <EmbeddedResource Include="FunctionList.resx">
       <DependentUpon>FunctionList.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="FunctionPage.resx">
+      <DependentUpon>FunctionPage.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="OpenFilesList.resx">
       <DependentUpon>OpenFilesList.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="OutputPage.resx">
+      <DependentUpon>OutputPage.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

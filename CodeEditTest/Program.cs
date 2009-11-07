@@ -8,7 +8,7 @@ namespace MonMon
 {
     static class Program
     {
-        static Form1 _mainForm;
+        static MonMonMainForm _mainForm;
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -26,8 +26,11 @@ namespace MonMon
                     Application.SetCompatibleTextRenderingDefault(false);
                     TestRunner tr = new TestRunner();
                     tr.Go();
-                    _mainForm = new Form1(args);
+                    DockTest _dockForm = new DockTest();
+                    _dockForm.Show();
+                    _mainForm = new MonMonMainForm(args);
                     Application.Run(_mainForm);
+                    
                 }
                 else
                 {

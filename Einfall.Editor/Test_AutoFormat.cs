@@ -105,5 +105,42 @@ namespace Einfall.Editor
             Assert.True(af.IsPosJustAfterFunction(testString, testPosition));
         }
 
+        [Test]
+        public void Test_PositionIsJustBeforeFunction_RealworldFail()
+        {     
+            AutoFormat af = new AutoFormat();
+            string testString = @"           function AnimationPlayer:Update(dt)";
+            int testPosition = testString.Length - 1;
+            Assert.True(af.IsPosJustAfterFunction(testString, testPosition));
+        }
+
+        [Test]
+        public void Test_IsPosJustAfterWord_ThenCorrect()
+        {
+            AutoFormat af = new AutoFormat();
+            string testString = @"then";
+            int testPosition = testString.Length - 1;
+            Assert.True(af.IsPosJustAfterWord(testString, "then", testPosition));
+        }
+
+
+        [Test]
+        public void Test_IsPosJustAfterWord_EndDiffer()
+        {
+            AutoFormat af = new AutoFormat();
+            string testString = @"hen";
+            int testPosition = testString.Length - 1;
+            Assert.False(af.IsPosJustAfterWord(testString, "then", testPosition));
+        }
+
+
+        [Test]
+        public void Test_IsPosJustAfterWord_FullString()
+        {
+            AutoFormat af = new AutoFormat();
+            string testString = @"if x > 100 then";
+            int testPosition = testString.Length - 1;
+            Assert.True(af.IsPosJustAfterWord(testString, "then", testPosition));
+        }
     }
 }

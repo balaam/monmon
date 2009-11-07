@@ -16,7 +16,7 @@ namespace MonMon
         public void Go()
         {
             //_testCodeTransformer.TestGetTextFromWhenIdNotPresent();
-            _testAutoFormat.Test_PositionIsJustBeforeFunction_WithSingleSpace();
+            _testAutoFormat.Test_IsPosJustAfterWord_ThenCorrect();
            // _testCodeTransformer.FindSecondLineIndex();
         }
 

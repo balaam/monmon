@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using ScintillaNet;
+using System.Drawing;
 using System.Text.RegularExpressions;
 
 namespace Einfall.Editor.Lua
 {
     public class CodeContextLua : ICodeContext
     {
+
         CodeTransformer _codeTransformer;
         List<FunctionMetaData> _functionList = new List<FunctionMetaData>();
 
@@ -129,6 +131,12 @@ namespace Einfall.Editor.Lua
         public void ClearFunctionList()
         {
             _functionList.Clear();
+        }
+
+        public void ApplyStyling(Scintilla scintilla)
+        {
+            scintilla.Styles[(int)Style.NUMBER].ForeColor = Color.Black;
+            scintilla.Styles[(int)Style.OPERATOR].ForeColor = Color.Black;
         }
 
         #endregion
