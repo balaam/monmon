@@ -53,6 +53,7 @@
     <Compile Include="ICodeContext.cs" />
     <Compile Include="FunctionMetaData.cs" />
     <Compile Include="KeyHelper.cs" />
+    <Compile Include="Lua\AutoCompleteLua.cs" />
     <Compile Include="Lua\AutoFormat.cs" />
     <Compile Include="Lua\CodeContextLua.cs" />
     <Compile Include="Lua\LuaStylesEnum.cs" />
