@@ -69,7 +69,7 @@ namespace MonMon
         {
             base.OnLoad(e);
             string configFile = Path.Combine(Path.GetDirectoryName(Application.ExecutablePath), "DockPanel.config");
-
+            
             if (File.Exists(configFile))
             {
                 _dockPanel.LoadFromXml(configFile, _deserializeDockContent);
@@ -79,6 +79,7 @@ namespace MonMon
             }
             else
             {
+            
                 _functionPage.Show(_dockPanel);
                 _outputPage.Show(_dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
                 _filePage.Show(_dockPanel);
@@ -95,26 +96,7 @@ namespace MonMon
                 return _outputPage;
             else
             {
-                /*
-                // DummyDoc overrides GetPersistString to add extra information into persistString.
-                // Any DockContent may override this value to add any needed information for deserialization.
-
-                string[] parsedStrings = persistString.Split(new char[] { ',' });
-                if (parsedStrings.Length != 3)
-                    return null;
-
-                if (parsedStrings[0] != typeof(DummyDoc).ToString())
-                    return null;
-
-                DummyDoc dummyDoc = new DummyDoc();
-                if (parsedStrings[1] != string.Empty)
-                    dummyDoc.FileName = parsedStrings[1];
-                if (parsedStrings[2] != string.Empty)
-                    dummyDoc.Text = parsedStrings[2];
-
-                return dummyDoc;
-                 */
-                return _outputPage;
+                return null;
             }
         }
 
