@@ -31,11 +31,11 @@
             this._openFileListControl = new MonMon.OpenFilesList();
             this.SuspendLayout();
             // 
-            // openFilesList1
+            // _openFileListControl
             // 
             this._openFileListControl.Dock = System.Windows.Forms.DockStyle.Fill;
             this._openFileListControl.Location = new System.Drawing.Point(0, 0);
-            this._openFileListControl.Name = "openFilesList1";
+            this._openFileListControl.Name = "_openFileListControl";
             this._openFileListControl.Size = new System.Drawing.Size(284, 264);
             this._openFileListControl.TabIndex = 0;
             // 

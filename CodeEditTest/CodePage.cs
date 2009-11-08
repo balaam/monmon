@@ -196,7 +196,7 @@ namespace MonMon
             {
                 File.WriteAllText(_path, _scintilla.Text);
             }
-            catch (UnauthorizedAccessException e)
+            catch (UnauthorizedAccessException)
             {
                 MessageBox.Show("Can't write to file, perhaps it's readonly?", "Write Error",
                     MessageBoxButtons.OK, MessageBoxIcon.Error);
