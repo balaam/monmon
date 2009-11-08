@@ -169,9 +169,6 @@ namespace MonMon
             }
         }
 
-
-
-
         protected override void OnClosed(EventArgs e)
         {
             _scintilla.Dispose();
@@ -179,12 +176,19 @@ namespace MonMon
             base.OnClosed(e);
         }
 
-        internal void Save()
+        internal void Save(SaveFileDialog saveDialog)
         {
             if (_path == null)
             {
-                MessageBox.Show("Need to write functionality for saving new files");
-                return;
+                if (saveDialog.ShowDialog(this) == DialogResult.OK)
+                {
+                    _path = saveDialog.FileName;
+                }
+                else
+                {
+                 //   MessageBox.Show("Need to write functionality for saving new files");
+                    return;
+                }
 
             }
             bool success = true;

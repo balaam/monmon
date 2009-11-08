@@ -388,7 +388,7 @@ namespace MonMon
                 return;
             }
 
-            cp.Save();
+            cp.Save(_saveFileDialog);
             //!_statusLabel.Text = "Saved " + _tabData[_tabControl.SelectedTab].Name;
             
         }
@@ -400,7 +400,7 @@ namespace MonMon
             // Base save all on what the user is seeing.
             foreach (CodePage cp in _codePageList)
             {
-                cp.Save();
+                cp.Save(_saveFileDialog);
                 //!_statusLabel.Text = "Saved " + _tabData[page].Name;
             }
              

@@ -63,6 +63,7 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this._dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
+            this._saveFileDialog = new System.Windows.Forms.SaveFileDialog();
             this._menuStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -277,6 +278,11 @@
             this._dockPanel.Skin = dockPanelSkin1;
             this._dockPanel.TabIndex = 8;
             // 
+            // _saveFileDialog
+            // 
+            this._saveFileDialog.DefaultExt = "lua";
+            this._saveFileDialog.Filter = "Lua Files|*.lua|All files|*.*";
+            // 
             // MonMonMainForm
             // 
             this.AllowDrop = true;
@@ -323,6 +329,7 @@
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem filesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ouputToolStripMenuItem;
+        private System.Windows.Forms.SaveFileDialog _saveFileDialog;
     }
 }
 
