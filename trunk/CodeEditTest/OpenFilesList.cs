@@ -11,11 +11,23 @@ namespace MonMon
 {
     public partial class OpenFilesList : UserControl
     {
+        ContextMenuStrip _contextMenuStrip = new ContextMenuStrip();
         List<CodePage> _fullList = new List<CodePage>();
         public event EventHandler DoubleClickFileList;
+        public event EventHandler CloseFiles;
         public OpenFilesList()
         {
             InitializeComponent();
+            _contextMenuStrip.Items.Add("Close Selected");
+            _contextMenuStrip.ItemClicked += new ToolStripItemClickedEventHandler(OnContextMenuItemClicked);
+        }
+
+        void OnContextMenuItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+            if (e.ClickedItem.Text == "Close Selected")
+            {
+                CloseFiles(_fileListBox, EventArgs.Empty);
+            }
         }
 
         public void AddFile(CodePage codePage)
@@ -64,6 +76,23 @@ namespace MonMon
         private void OnDoubleClickFileList(object sender, MouseEventArgs e)
         {
             DoubleClickFileList(sender, e);
+        }
+
+        private void OnRightClickFileList(object sender, MouseEventArgs e)
+        {
+            // No operations if no files are selected.
+            if (_fileListBox.SelectedItems.Count == 0)
+            {
+                return;
+            }
+
+            if (e.Button == MouseButtons.Right)
+            {
+               // int i = 0;
+
+                _contextMenuStrip.Show(System.Windows.Forms.Cursor.Position);
+            }
+
         }
 
    

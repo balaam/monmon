@@ -61,7 +61,38 @@ namespace MonMon
             _functionPage.OnRefreshClicked += new EventHandler(Refresh_Click);
             _functionPage.OnFunctionDblClicked += new EventHandler(OnFunctionShortCutDblClicked);
             _filePage.DoubleClickFileList += new EventHandler(OnFileListDoubleClicked);
+            _filePage.CloseFiles += new EventHandler(OnCloseFiles);
             _outputPage.OnDblClickFindResult += new EventHandler(OnDoubleClickFindResult);
+        }
+
+        void OnCloseFiles(object sender, EventArgs e)
+        {
+            ListBox listbox = (ListBox)sender;
+
+            List<string> _toClose = new List<string>(listbox.SelectedItems.OfType<string>());
+
+            foreach (string s in _toClose)
+            {
+                CodePage page = FindCodePageByName(s);
+                if (page != null)
+                {
+                    page.Close();
+                }
+            }
+
+     
+        }
+
+        private CodePage FindCodePageByName(string p)
+        {
+            foreach (CodePage cp in _codePageList)
+            {
+                if (cp.Text == p)
+                {
+                    return cp;
+                }
+            }
+            return null;
         }
 
 
@@ -368,13 +399,25 @@ namespace MonMon
 
         private void LoadFileFromPath(string path)
         {
-            //!CloseTabByPath(path);
+            ClosePageByPath(path);
             string fullText = File.ReadAllText(path);
 
             CodePage codePage = CreateCodePage(fullText);
             codePage.Show(_dockPanel);
             codePage.Path = path;
             RefreshFunctionList();
+        }
+
+        private void ClosePageByPath(string path)
+        {
+            foreach (CodePage cp in _codePageList)
+            {
+                if (cp.Path == path)
+                {
+                    cp.Close();
+                    return;
+                }
+            }
         }
 
 

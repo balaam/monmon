@@ -13,6 +13,7 @@ namespace MonMon
     public partial class FilePage : DockContent
     {
         public event EventHandler DoubleClickFileList;
+        public event EventHandler CloseFiles;
         public FilePage()
         {
             InitializeComponent();
@@ -20,6 +21,11 @@ namespace MonMon
             _openFileListControl.DoubleClickFileList += delegate(object sender, EventArgs args)
             {
                 DoubleClickFileList(sender, args);
+            };
+
+            _openFileListControl.CloseFiles += delegate(object sender, EventArgs args)
+            {
+                CloseFiles(sender, args);
             };
         }
 
