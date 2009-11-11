@@ -64,7 +64,7 @@
             this._fileListBox.FormattingEnabled = true;
             this._fileListBox.Location = new System.Drawing.Point(3, 3);
             this._fileListBox.Name = "_fileListBox";
-            this._fileListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiSimple;
+            this._fileListBox.SelectionMode = System.Windows.Forms.SelectionMode.MultiExtended;
             this._fileListBox.Size = new System.Drawing.Size(104, 329);
             this._fileListBox.TabIndex = 1;
             this._fileListBox.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.OnDoubleClickFileList);
