@@ -54,6 +54,11 @@ namespace Einfall.Editor.Lua
             {
                 AutoFormatThenIndent(scintilla);
             }
+            else if (IsPosJustAfterWord(scintilla.Text, "else", justBeforeNewline))
+            {
+                int offset = scintilla.Lines.Current.Previous.Text.LastIndexOf("else");
+                scintilla.InsertText(new string(' ', offset) + '\t');
+            }
             else if (IsPosJustAfterWord(scintilla.Text, "do", justBeforeNewline))
             {
                 DoIndent(scintilla, "\t");
@@ -67,27 +72,57 @@ namespace Einfall.Editor.Lua
 
         private static void AutoFormatThenIndent(Scintilla scintilla)
         {
-            // look for associated if, or elseif or else
+            // look for associated if, or elseif or else (could be more efficent by writng own reverse search)
             int lineNumber = scintilla.Lines.Current.Number;
             while (lineNumber > -1)
             {
                 Line currentLine = scintilla.Lines[lineNumber];
 
+                // Look for broken cases
+                int functionIndex = currentLine.Text.LastIndexOf("function");
+                if (functionIndex != -1)
+                {
+                    DoIndent(scintilla);
+                    return;
+                }
+                int endIndex = currentLine.Text.LastIndexOf("end");
+                if (endIndex != -1)
+                {
+                    DoIndent(scintilla);
+                    return;
+                }
+
+                int elseifIndex = currentLine.Text.LastIndexOf("else");
+                if (elseifIndex != -1)
+                {
+                    // got some data can return
+                    int offset = elseifIndex;
+                    for (int i = 0; i < elseifIndex; i++)
+                    {
+                        if (currentLine.Text[i] == '\t')
+                        {
+                            offset += 3; // tabs are 4 spaces '\t' is 1 so plus 3
+                        }
+                    }
+                    scintilla.InsertText(new string(' ', offset) + '\t');
+                    break;
+                }
+                // Look for legitimate cases (handles elseif and if)
                 int ifIndex = currentLine.Text.LastIndexOf("if");
                 if (ifIndex != -1)
                 {
                     // got some data can return
-                    int offset = GetLocalLinePos(scintilla, ifIndex, currentLine);
+                    int offset = ifIndex;
+                    for (int i = 0; i < ifIndex; i++)
+                    {
+                        if (currentLine.Text[i] == '\t')
+                        {
+                            offset += 3; // tabs are 4 spaces '\t' is 1 so plus 3
+                        }
+                    }
                     scintilla.InsertText(new string(' ', offset) + '\t');
                     break;
                 }
-                else
-                {
-                    // try else
-                }
-
-
-
                 lineNumber = lineNumber - 1;
             }
         }
