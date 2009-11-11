@@ -73,11 +73,10 @@ namespace Einfall.Editor.Lua
             {
                 Line currentLine = scintilla.Lines[lineNumber];
 
+                int ifIndex = currentLine.Text.LastIndexOf("if");
                 if (ifIndex != -1)
                 {
                     // got some data can return
-                    int i = 0;
-                    int ifIndex = currentLine.Text.LastIndexOf("if");
                     int offset = GetLocalLinePos(scintilla, ifIndex, currentLine);
                     scintilla.InsertText(new string(' ', offset) + '\t');
                     break;
