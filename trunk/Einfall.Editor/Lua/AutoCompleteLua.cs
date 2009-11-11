@@ -16,6 +16,7 @@ namespace Einfall.Editor.Lua
         CharacterEnterState _state = CharacterEnterState.Normal;
         AutoFormat _autoFormat;
         Dictionary<string, List<string>> _completionData = new Dictionary<string, List<string>>();
+        List<string> _currentList = new List<string>();
         string _currentWord = "";
 
 
@@ -30,8 +31,10 @@ namespace Einfall.Editor.Lua
         public AutoCompleteLua(Scintilla scintilla, AutoFormat af)
         {
             _autoFormat = af;
-            scintilla.AutoComplete.AutoHide = true;
-            scintilla.AutoComplete.IsCaseSensitive = false;
+            //scintilla.AutoComplete.AutoHide = true;
+            //scintilla.AutoComplete.IsCaseSensitive = false;
+            scintilla.AutoComplete.SingleLineAccept = false;
+            
             scintilla.AutoComplete.StopCharacters = ":(";
 
             // This should obviously be a data file
@@ -93,7 +96,6 @@ namespace Einfall.Editor.Lua
             mathList.Add("exp");
             mathList.Add("floor");
             mathList.Add("fmod");
-            mathList.Add("abs");
             mathList.Add("frexp");
 
             mathList.Add("huge");
@@ -119,6 +121,7 @@ namespace Einfall.Editor.Lua
 
             scintilla.AutoComplete.List = _completionData[""];
         }
+
         public void OnDotCharAdded(Scintilla scintilla)
         {
             _currentWord = "";
@@ -132,7 +135,10 @@ namespace Einfall.Editor.Lua
             if (_completionData.Keys.Contains(word))
             {
                 _state = CharacterEnterState.DuringAutoPrompt;
-                scintilla.AutoComplete.Show(_completionData[word]);
+
+                _currentList.Clear();
+                _currentList.AddRange(_completionData[word]);
+                scintilla.AutoComplete.Show(_currentList);
             }
 
         }
@@ -159,6 +165,9 @@ namespace Einfall.Editor.Lua
 
             // Should filter the current selection by the word
             _currentWord += c;
+            _currentList.RemoveAll(x => !x.StartsWith(_currentWord));
+            scintilla.AutoComplete.List = _currentList;
+            scintilla.AutoComplete.Show(_currentList);
 
             return true;
         }

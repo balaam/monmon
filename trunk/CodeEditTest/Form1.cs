@@ -372,8 +372,8 @@ namespace MonMon
             scintilla.PreviewKeyDown += new PreviewKeyDownEventHandler(OnPreviewScintillaKeyDown);
             scintilla.KeyUp += new KeyEventHandler(OnScintillaKeyUp);
             scintilla.Margins[0].Width = 35; // some room for line numbers
-            scintilla.AutoComplete.AutoHide = false;
-            scintilla.AutoComplete.AutomaticLengthEntered = true;
+          //  scintilla.AutoComplete.AutoHide = false;
+           // scintilla.AutoComplete.AutomaticLengthEntered = true;
           
     
             scintilla.Focus();
