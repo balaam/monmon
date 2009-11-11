@@ -42,23 +42,8 @@ namespace Einfall.Editor.Lua
 
             if (IsPosJustAfterFunction(scintilla.Text, justBeforeNewline, out functionStart))
             {
-                int previousStartPos =  scintilla.Lines.Current.Previous.StartPosition;
-                Debug.Assert(functionStart >= previousStartPos);
-                int offset = functionStart - previousStartPos;
-
-                for (int i = previousStartPos; i < functionStart; i++)
-                {
-                    if (scintilla.Text[i] == '\t')
-                    {
-                        offset += 3; // tabs are 4 spaces '\t' is 1 so plus 3
-                    }
-                }
-                // Find function position relative to the current line
-                // On the next line do the tab index equivalent.
-                //Line l = scintilla.Lines.FromPosition(functionStart);
-                //int indentAmount = l.Indentation;
-                // This should really be more clever and but in as many tabs as possible.
-                //string s = new string(' ', indentAmount) + "\t";
+                int offset = GetMatchingIndentFromPreviousLine(scintilla, functionStart);
+                // offsets could be turned into tabs then top up spaces
                 scintilla.InsertText(new string(' ', offset) + '\t');
             }
             else if (IsPosJustAfterWord(scintilla.Text, "{", justBeforeNewline))
@@ -67,7 +52,7 @@ namespace Einfall.Editor.Lua
             }
             else if (IsPosJustAfterWord(scintilla.Text, "then", justBeforeNewline))
             {
-                DoIndent(scintilla, "\t");
+                AutoFormatThenIndent(scintilla);
             }
             else if (IsPosJustAfterWord(scintilla.Text, "do", justBeforeNewline))
             {
@@ -79,6 +64,66 @@ namespace Einfall.Editor.Lua
             }
     
         }
+
+        private static void AutoFormatThenIndent(Scintilla scintilla)
+        {
+            // look for associated if, or elseif or else
+            int lineNumber = scintilla.Lines.Current.Number;
+            while (lineNumber > -1)
+            {
+                Line currentLine = scintilla.Lines[lineNumber];
+
+                if (ifIndex != -1)
+                {
+                    // got some data can return
+                    int i = 0;
+                    int ifIndex = currentLine.Text.LastIndexOf("if");
+                    int offset = GetLocalLinePos(scintilla, ifIndex, currentLine);
+                    scintilla.InsertText(new string(' ', offset) + '\t');
+                    break;
+                }
+                else
+                {
+                    // try else
+                }
+
+
+
+                lineNumber = lineNumber - 1;
+            }
+        }
+
+        private static int GetMatchingIndentFromPreviousLine(Scintilla scintilla, int previousLineIndent)
+        {
+            Line line = scintilla.Lines.Current.Previous;
+            return GetLocalLinePos(scintilla, previousLineIndent, line);
+        }
+
+        /// <summary>
+        /// Lots of the scintilla indexs are for the whole text, this gets a index local to the line
+        /// from a whole text index
+        /// </summary>
+        /// <param name="scintilla"></param>
+        /// <param name="previousLineIndent"></param>
+        /// <param name="line"></param>
+        /// <returns></returns>
+        private static int GetLocalLinePos(Scintilla scintilla, int previousLineIndent, Line line)
+        {
+            int previousStartPos = line.StartPosition;
+            Debug.Assert(previousLineIndent >= previousStartPos);
+            int offset = previousLineIndent - previousStartPos;
+
+            for (int i = previousStartPos; i < previousLineIndent; i++)
+            {
+                if (scintilla.Text[i] == '\t')
+                {
+                    offset += 3; // tabs are 4 spaces '\t' is 1 so plus 3
+                }
+            }
+            return offset;
+        }
+
+
 
         public bool IsPosJustAfterWord(string text, string word, int justBeforeNewline)
         {

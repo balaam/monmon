@@ -16,6 +16,8 @@ namespace Einfall.Editor.Lua
         CharacterEnterState _state = CharacterEnterState.Normal;
         AutoFormat _autoFormat;
         Dictionary<string, List<string>> _completionData = new Dictionary<string, List<string>>();
+        string _currentWord = "";
+
 
         public CharacterEnterState State
         {
@@ -119,6 +121,7 @@ namespace Einfall.Editor.Lua
         }
         public void OnDotCharAdded(Scintilla scintilla)
         {
+            _currentWord = "";
             string word = scintilla.GetWordFromPosition(scintilla.CurrentPos-1);
 
             if (word == "")
@@ -141,12 +144,21 @@ namespace Einfall.Editor.Lua
         /// <returns>Has the char been hanlded?</returns>
         public bool OnCharAddedDuringAutoPrompt(Scintilla scintilla, char c)
         {
+            // This also needs to know about backspace!
+            if (!char.IsLetterOrDigit(c))
+            {
+                scintilla.AutoComplete.Cancel();
+            }
             if (!scintilla.AutoComplete.IsActive)
             {
+                _currentWord = "";
                 _state = CharacterEnterState.Normal;
                 scintilla.AutoComplete.List = _completionData[""];
                 return false;
             }
+
+            // Should filter the current selection by the word
+            _currentWord += c;
 
             return true;
         }
