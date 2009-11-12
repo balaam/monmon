@@ -65,6 +65,16 @@ namespace Einfall.Editor.Lua
             }
             else
             {
+                // This is probably a bit cheeky, especially if you have long for statement
+                int possibleForError = scintilla.Lines.Current.Previous.Text.LastIndexOf("for");
+                if(possibleForError != -1)
+                {
+                    // need to insert do
+                    scintilla.Lines.Current.Previous.Text = scintilla.Lines.Current.Previous.Text.Insert(
+                        scintilla.Lines.Current.Previous.Length - 2,
+                        " do").TrimEnd('\n', '\r');
+
+                }
                 DoIndent(scintilla);
             }
     
