@@ -31,6 +31,13 @@ namespace Einfall.Editor.Lua
 
         public void CommentOutSelection(Scintilla scintilla, Selection selection)
         {
+            if (selection.Range.Length == 1)
+            {
+                if (selection.Text == "+")
+                {
+                    return; // you almost certainly want to replace a plus with a minus not comment it out
+                }
+            }
             bool midLineSelection = DoesSelectionStartMidLine(selection) || DoesSelectionEndMidLine(selection);
             string firstLineOfSelection = _codeTransformer.GetTextFromStartTo("\r\n", selection.Text);
            // string text = selection.Range.StartingLine.Text;
