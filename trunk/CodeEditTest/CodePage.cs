@@ -45,12 +45,12 @@ namespace MonMon
             }
         }
 
-        public CodePage(Scintilla scintilla)
+        public CodePage(Scintilla scintilla, Dictionary<string, List<string>> autoComplete)
         {
             InitializeComponent();
             _scintilla = scintilla;
             _scintilla.Dock = DockStyle.Fill;
-            _autoComplete = new AutoCompleteLua(_scintilla, _autoFormat);
+            _autoComplete = new AutoCompleteLua(_scintilla, autoComplete, _autoFormat);
 
             SetHorizontalScrollBar();
             

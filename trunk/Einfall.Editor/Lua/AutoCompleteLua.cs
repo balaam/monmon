@@ -28,7 +28,7 @@ namespace Einfall.Editor.Lua
             }
         }
 
-        public AutoCompleteLua(Scintilla scintilla, AutoFormat af)
+        public AutoCompleteLua(Scintilla scintilla, Dictionary<string, List<string>> autoComplete,AutoFormat af)
         {
             _autoFormat = af;
             //scintilla.AutoComplete.AutoHide = true;
@@ -37,6 +37,9 @@ namespace Einfall.Editor.Lua
             
             scintilla.AutoComplete.StopCharacters = ":(";
 
+            _completionData = autoComplete;
+            
+            
             // This should obviously be a data file
             var globalComplete = new List<string>();
             
@@ -85,40 +88,10 @@ namespace Einfall.Editor.Lua
 
             _completionData.Add("", globalComplete);
             var mathList = new List<string>();
-            mathList.Add("abs");
-            mathList.Add("acos");
-            mathList.Add("asin");
-            mathList.Add("atan");
-            mathList.Add("atan2");
-            mathList.Add("ceil");
-            mathList.Add("cos");
-            mathList.Add("cosh");
-            mathList.Add("exp");
-            mathList.Add("floor");
-            mathList.Add("fmod");
-            mathList.Add("frexp");
 
-            mathList.Add("huge");
-            mathList.Add("ldexp");
-            mathList.Add("log");
-            mathList.Add("log10");
-            mathList.Add("max");
-            mathList.Add("min");
-            mathList.Add("pi");
 
-            mathList.Add("pow");
-            mathList.Add("rad");
-            mathList.Add("random");
-            mathList.Add("randomseed");
-            mathList.Add("sin");
-
-            mathList.Add("sinh");
-            mathList.Add("sqrt");
-            mathList.Add("tanh");
-            mathList.Add("tan");
-
-            _completionData.Add("math", mathList);
-
+            //_completionData.Add("math", mathList);
+            
             scintilla.AutoComplete.List = _completionData[""];
         }
 

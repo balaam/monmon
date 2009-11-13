@@ -24,6 +24,7 @@ namespace MonMon
                     singleInstance.ListenForArgumentsFromSuccessiveInstances(); 
                     Application.EnableVisualStyles();
                     Application.SetCompatibleTextRenderingDefault(false);
+                   
                     TestRunner tr = new TestRunner();
                     tr.Go();
                     _mainForm = new MonMonMainForm(args);

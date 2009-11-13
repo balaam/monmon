@@ -36,6 +36,7 @@ namespace MonMon
         FindAll _findAllDialog = new FindAll();
         List<FindResult> _findResults = new List<FindResult>();
         List<CodePage> _codePageList = new List<CodePage>();
+        Dictionary<string, List<string>> _autocompleteList;
 
         // Helper Windows
         FunctionPage _functionPage  = new FunctionPage();
@@ -44,6 +45,8 @@ namespace MonMon
 
         public MonMonMainForm(string[] args)
         {
+            SettingsReader r = new SettingsReader();
+            _autocompleteList = r.Read();
             InitializeComponent();
             _deserializeDockContent = new DeserializeDockContent(GetContentFromPersistString);
             _codeContext = new CodeContextLua();
@@ -110,7 +113,6 @@ namespace MonMon
             }
             else
             {
-            
                 _functionPage.Show(_dockPanel);
                 _outputPage.Show(_dockPanel, WeifenLuo.WinFormsUI.Docking.DockState.DockBottom);
                 _filePage.Show(_dockPanel);
@@ -329,7 +331,7 @@ namespace MonMon
             // This could be inside the codepage?
             Scintilla scintilla = CreateNewLuaScintilla();
             scintilla.Text = fullText;
-            CodePage page = new CodePage(scintilla);
+            CodePage page = new CodePage(scintilla, _autocompleteList);
             page.Disposed += delegate(object sender, EventArgs e)
             {
                 _codePageList.Remove(page);
