@@ -154,5 +154,69 @@
           <name>upper</name>
         </child>
       </parent>
+    <parent name="coroutine">
+      <child>
+        <name>create</name>
+      </child>
+      <child>
+        <name>resume</name>
+      </child>
+      <child>
+        <name>running</name>
+      </child>
+      <child>
+        <name>status</name>
+      </child>
+      <child>
+        <name>wrap</name>
+      </child>
+      <child>
+        <name>yield</name>
+      </child>
+    </parent>
+    <parent name="debug">
+      <child>
+        <name>debug</name>
+      </child>
+      <child>
+        <name>getfenv</name>
+      </child>
+      <child>
+        <name>gethook</name>
+      </child>
+      <child>
+        <name>getinfo</name>
+      </child>
+      <child>
+        <name>getlocal</name>
+      </child>
+      <child>
+        <name>getmetatable</name>
+      </child>
+      <child>
+        <name>getregistry</name>
+      </child>
+      <child>
+        <name>getupvalue</name>
+      </child>
+      <child>
+        <name>setfenv</name>
+      </child>
+      <child>
+        <name>sethook</name>
+      </child>
+      <child>
+        <name>setlocal</name>
+      </child>
+      <child>
+        <name>setmetatable</name>
+      </child>
+      <child>
+        <name>setupvalue</name>
+      </child>
+      <child>
+        <name>traceback</name>
+      </child>
+    </parent>
   </autocomplete>
 </settings>

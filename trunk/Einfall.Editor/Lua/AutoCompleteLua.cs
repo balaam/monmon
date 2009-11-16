@@ -39,7 +39,7 @@ namespace Einfall.Editor.Lua
 
             _completionData = autoComplete;
             
-            
+            /*
             // This should obviously be a data file
             var globalComplete = new List<string>();
             
@@ -89,10 +89,10 @@ namespace Einfall.Editor.Lua
             _completionData.Add("", globalComplete);
             var mathList = new List<string>();
 
-
+            */
             //_completionData.Add("math", mathList);
             
-            scintilla.AutoComplete.List = _completionData[""];
+         //   scintilla.AutoComplete.List = _completionData[""];
         }
 
         public void OnDotCharAdded(Scintilla scintilla)
