@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Xml;
+using Einfall.Editor.Lua;
 
 namespace MonMon
 {
@@ -13,10 +14,10 @@ namespace MonMon
         {
         }
 
-        public Dictionary<string, List<string>> Read()
+        public Dictionary<string, List<CompleteData>> Read()
         {
             string filePath = "default.xml";
-            var autocompleteTable = new Dictionary<string, List<string>>();
+            var autocompleteTable = new Dictionary<string, List<CompleteData>>();
             if (!File.Exists(filePath))
             {
                 return autocompleteTable;
@@ -35,11 +36,11 @@ namespace MonMon
                         {
                             reader.MoveToAttribute("name");
                             currentName = reader.ReadContentAsString();
-                            autocompleteTable.Add(currentName, new List<string>());
+                            autocompleteTable.Add(currentName, new List<CompleteData>());
                         }
                         else if (reader.Name == "child")
                         {
-                            string childData = "";
+                            CompleteData childData = new CompleteData();
                             // Get data add it to the autocomplete table
                             reader.Read();
                             while (reader.Name != "child")
@@ -48,7 +49,7 @@ namespace MonMon
                                 {
                                     case "name":
                                         {
-                                            childData = reader.ReadElementContentAsString();
+                                            childData.Name = reader.ReadElementContentAsString();
                                         } break;
                                     default:
                                         {
