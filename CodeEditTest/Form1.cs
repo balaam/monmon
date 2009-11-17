@@ -36,7 +36,7 @@ namespace MonMon
         FindAll _findAllDialog = new FindAll();
         List<FindResult> _findResults = new List<FindResult>();
         List<CodePage> _codePageList = new List<CodePage>();
-        Dictionary<string, List<string>> _autocompleteList;
+        Dictionary<string, List<CompleteData>> _autocompleteList;
 
         // Helper Windows
         FunctionPage _functionPage  = new FunctionPage();
@@ -262,6 +262,10 @@ namespace MonMon
         {
             Scintilla localScintilla = (Scintilla)sender;
             _selection = localScintilla.Selection;
+            if (e.Shift)
+            {
+                return;
+            }
             char charEntered = KeyHelper.KeycodeToChar(e.KeyCode);
 
 
@@ -272,6 +276,13 @@ namespace MonMon
 
             if (_codeContext.IsStartOfComment(charEntered))
             {
+                if (_selection.Range.Text.Trim().Length == 1)
+                {
+                    if (_selection.Text == "+")
+                    {
+                        return; // you almost certainly want to replace a plus with a minus not comment it out
+                    }
+                }
                 _codeContext.CommentOutSelection(localScintilla, _selection);
         
                // Forces the comment key not to be input.

@@ -15,7 +15,7 @@ namespace Einfall.Editor.Lua
     {
         CharacterEnterState _state = CharacterEnterState.Normal;
         AutoFormat _autoFormat;
-        Dictionary<string, List<string>> _completionData = new Dictionary<string, List<string>>();
+        Dictionary<string, List<CompleteData>> _completionData = new Dictionary<string, List<CompleteData>>();
         List<string> _currentList = new List<string>();
         string _currentWord = "";
 
@@ -28,14 +28,14 @@ namespace Einfall.Editor.Lua
             }
         }
 
-        public AutoCompleteLua(Scintilla scintilla, Dictionary<string, List<string>> autoComplete,AutoFormat af)
+        public AutoCompleteLua(Scintilla scintilla, Dictionary<string, List<CompleteData>> autoComplete,AutoFormat af)
         {
             _autoFormat = af;
             //scintilla.AutoComplete.AutoHide = true;
             //scintilla.AutoComplete.IsCaseSensitive = false;
             scintilla.AutoComplete.SingleLineAccept = false;
             
-            scintilla.AutoComplete.StopCharacters = ":(";
+            scintilla.AutoComplete.StopCharacters = "(";
 
             _completionData = autoComplete;
             
@@ -95,7 +95,7 @@ namespace Einfall.Editor.Lua
          //   scintilla.AutoComplete.List = _completionData[""];
         }
 
-        public void OnDotCharAdded(Scintilla scintilla)
+        public void OnAutoCompleteCharAdded(Scintilla scintilla)
         {
             _currentWord = "";
             string word = scintilla.GetWordFromPosition(scintilla.CurrentPos-1);
@@ -110,7 +110,11 @@ namespace Einfall.Editor.Lua
                 _state = CharacterEnterState.DuringAutoPrompt;
 
                 _currentList.Clear();
-                _currentList.AddRange(_completionData[word]);
+                foreach (CompleteData cd in _completionData[word])
+                {
+                    _currentList.Add(cd.Name);
+                }
+                
                 scintilla.AutoComplete.Show(_currentList);
             }
 
@@ -132,7 +136,12 @@ namespace Einfall.Editor.Lua
             {
                 _currentWord = "";
                 _state = CharacterEnterState.Normal;
-                scintilla.AutoComplete.List = _completionData[""];
+                scintilla.AutoComplete.List.Clear();
+                foreach(CompleteData cd in _completionData[""])
+                {
+                    scintilla.AutoComplete.List.Add(cd.Name);
+                }
+                
                 return false;
             }
 

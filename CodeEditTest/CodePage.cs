@@ -45,7 +45,7 @@ namespace MonMon
             }
         }
 
-        public CodePage(Scintilla scintilla, Dictionary<string, List<string>> autoComplete)
+        public CodePage(Scintilla scintilla, Dictionary<string, List<CompleteData>> autoComplete)
         {
 
             InitializeComponent();
@@ -138,7 +138,7 @@ namespace MonMon
 
             if(e.Ch == '(')
             {
-                //scintilla.CallTip.Show("Your smart Tooltip functionality", scintilla.CurrentPos);
+                scintilla.CallTip.Show("Your smart Tooltip functionality", scintilla.CurrentPos);
                 
             }
             else
@@ -164,9 +164,9 @@ namespace MonMon
             {
                 _autoFormat.OnEnterPressed(scintilla);
             }
-            else if (e.Ch == '.')
+            else if (e.Ch == '.' || e.Ch == ':')
             {
-                _autoComplete.OnDotCharAdded(scintilla);
+                _autoComplete.OnAutoCompleteCharAdded(scintilla);
             }
         }
 
