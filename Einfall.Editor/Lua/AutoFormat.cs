@@ -66,8 +66,8 @@ namespace Einfall.Editor.Lua
             else
             {
                 // This is probably a bit cheeky, especially if you have long for statement
-                int possibleForError = scintilla.Lines.Current.Previous.Text.LastIndexOf("for");
-                if(possibleForError != -1)
+                bool doesHaveForError = DoesLineHaveForStatement(scintilla.Lines.Current.Previous.Text);
+                if (doesHaveForError)
                 {
                     // need to insert do
                     scintilla.Lines.Current.Previous.Text = scintilla.Lines.Current.Previous.Text.Insert(
@@ -78,6 +78,30 @@ namespace Einfall.Editor.Lua
                 DoIndent(scintilla);
             }
     
+        }
+
+        /// <summary>
+        /// This will not detect a for statement if it comes after some nonwhitespace characters but is still valid
+        /// </summary>
+        /// <param name="lineText"></param>
+        /// <returns></returns>
+        public bool DoesLineHaveForStatement(string lineText)
+        {
+            int forIndex = lineText.LastIndexOf("for");
+            if (forIndex != -1)
+            {
+                string beforeFor = lineText.Substring(0, forIndex);
+                if (beforeFor.Trim() == "")
+                {
+                    // Need to check stuff before for or could be a comment / string
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            return false;
         }
 
         private static void AutoFormatThenIndent(Scintilla scintilla)

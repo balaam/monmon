@@ -142,5 +142,19 @@ namespace Einfall.Editor
             int testPosition = testString.Length - 1;
             Assert.True(af.IsPosJustAfterWord(testString, "then", testPosition));
         }
+
+        [Test]
+        public void Test_DoesLineHaveForStatement()
+        {
+            AutoFormat af = new AutoFormat();
+            Assert.True(af.DoesLineHaveForStatement("for"));
+        }
+
+        [Test]
+        public void Test_DoesLineHaveForStatement_InString()
+        {
+            AutoFormat af = new AutoFormat();
+            Assert.False(af.DoesLineHaveForStatement("\"for\""));
+        }
     }
 }
