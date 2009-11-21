@@ -63,6 +63,39 @@ namespace Einfall.Editor.Lua
             {
                 DoIndent(scintilla, "\t");
             }
+            else if (IsPosJustAfterWord(scintilla.Text, "end", justBeforeNewline))
+            {
+                // Need to add the case for a function() end in two lines
+                // Is end indented with the previous line? If so, and if possible, move
+                // it back
+
+                string endIndent = GetStartingWhiteSpace(scintilla.Lines.Current.Previous.Text);
+                string priorIndent = GetStartingWhiteSpace(scintilla.Lines.Current.Previous.Previous.Text);
+
+                if (endIndent == priorIndent)
+                {
+                    
+                    // Time to move the end line back
+                    // Does the line contain a tab
+                    if(endIndent.Contains("\t"))
+                    {
+                        // remove a tab
+                        string newText = scintilla.Lines.Current.Previous.Text;
+                        newText = newText.Remove(newText.IndexOf("\t"), 1);
+                        scintilla.Lines.Current.Previous.Text = newText;
+                            
+                    }
+                    else if(endIndent.Contains("    "))
+                    {
+                        // Remove four spaces.
+                    }
+                    
+                }
+
+
+
+
+            }
             else
             {
                 // This is probably a bit cheeky, especially if you have long for statement
@@ -219,7 +252,32 @@ namespace Einfall.Editor.Lua
 
         private static void DoIndent(Scintilla scintilla)
         {
-            DoIndent(scintilla, "");
+            string indent = GetStartingWhiteSpace(scintilla.Lines.Current.Previous.Text);
+            scintilla.Lines.Current.Text = indent + scintilla.Lines.Current.Text;
+            scintilla.CurrentPos = scintilla.Lines.Current.EndPosition;
+        }
+
+        private static string GetStartingWhiteSpace(string previousLine)
+        {
+            string indent = "";
+            // Find first non-whitespace character
+            if (string.IsNullOrEmpty(previousLine))
+            {
+                return "";
+            }
+            
+            for (int i = 0; i < previousLine.Length; i++)
+            {
+                if (char.IsWhiteSpace(previousLine[i]))
+                {
+                    indent += previousLine[i];
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return indent;
         }
         private static void DoIndent(Scintilla scintilla, string extra)
         {

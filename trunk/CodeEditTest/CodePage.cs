@@ -61,7 +61,16 @@ namespace MonMon
             _modified = false;
             _diskHash = _scintilla.Text.GetHashCode();
             _scintilla.CharAdded += new EventHandler<CharAddedEventArgs>(OnScintillaCharAdded);
+            scintilla.KeyDown += new KeyEventHandler(scintilla_KeyDown);
             _scintilla.TextChanged += new EventHandler<EventArgs>(OnTextChanged);    
+        }
+
+        void scintilla_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Back)
+            {
+                _autoComplete.OnBackSpaceInAutoPrompt(_scintilla);
+            }
         }
 
         /// <summary>

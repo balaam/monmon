@@ -147,11 +147,29 @@ namespace Einfall.Editor.Lua
 
             // Should filter the current selection by the word
             _currentWord += c;
+            UpdateAutocompleteSuggestions(scintilla);
+
+            return true;
+        }
+
+        private void UpdateAutocompleteSuggestions(Scintilla scintilla)
+        {
             _currentList.RemoveAll(x => !x.ToLower().StartsWith(_currentWord.ToLower()));
             scintilla.AutoComplete.List = _currentList;
             scintilla.AutoComplete.Show(_currentList);
+        }
 
-            return true;
+        public void OnBackSpaceInAutoPrompt(Scintilla scintilla)
+        {
+            if (_currentWord == "")
+            {
+                scintilla.AutoComplete.Cancel();
+            }
+            else
+            {
+                _currentWord = _currentWord.Substring(0, _currentWord.Length - 1);
+                UpdateAutocompleteSuggestions(scintilla);
+            }
         }
     }
 }
