@@ -147,7 +147,7 @@ namespace Einfall.Editor.Lua
 
             // Should filter the current selection by the word
             _currentWord += c;
-            _currentList.RemoveAll(x => !x.StartsWith(_currentWord));
+            _currentList.RemoveAll(x => !x.ToLower().StartsWith(_currentWord.ToLower()));
             scintilla.AutoComplete.List = _currentList;
             scintilla.AutoComplete.Show(_currentList);
 
