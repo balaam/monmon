@@ -64,12 +64,12 @@
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this._dockPanel = new WeifenLuo.WinFormsUI.Docking.DockPanel();
             this._saveFileDialog = new System.Windows.Forms.SaveFileDialog();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.listBox1 = new System.Windows.Forms.ListBox();
-            this.textBox1 = new System.Windows.Forms.TextBox();
+            this._panelCommand = new System.Windows.Forms.Panel();
+            this._listBoxCommandHistory = new System.Windows.Forms.ListBox();
+            this._textBoxCommand = new System.Windows.Forms.TextBox();
             this._menuStrip.SuspendLayout();
             this.toolStrip1.SuspendLayout();
-            this.panel1.SuspendLayout();
+            this._panelCommand.SuspendLayout();
             this.SuspendLayout();
             // 
             // _menuStrip
@@ -287,35 +287,35 @@
             this._saveFileDialog.DefaultExt = "lua";
             this._saveFileDialog.Filter = "Lua Files|*.lua|All files|*.*";
             // 
-            // panel1
+            // _panelCommand
             // 
-            this.panel1.Controls.Add(this.listBox1);
-            this.panel1.Controls.Add(this.textBox1);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.panel1.Location = new System.Drawing.Point(0, 400);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(723, 100);
-            this.panel1.TabIndex = 11;
-            this.panel1.Visible = false;
+            this._panelCommand.Controls.Add(this._listBoxCommandHistory);
+            this._panelCommand.Controls.Add(this._textBoxCommand);
+            this._panelCommand.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this._panelCommand.Location = new System.Drawing.Point(0, 400);
+            this._panelCommand.Name = "_panelCommand";
+            this._panelCommand.Size = new System.Drawing.Size(723, 100);
+            this._panelCommand.TabIndex = 11;
+            this._panelCommand.Visible = false;
             // 
             // listBox1
             // 
-            this.listBox1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listBox1.FormattingEnabled = true;
-            this.listBox1.Location = new System.Drawing.Point(0, 0);
-            this.listBox1.Name = "listBox1";
-            this.listBox1.Size = new System.Drawing.Size(723, 69);
-            this.listBox1.TabIndex = 5;
+            this._listBoxCommandHistory.Dock = System.Windows.Forms.DockStyle.Fill;
+            this._listBoxCommandHistory.FormattingEnabled = true;
+            this._listBoxCommandHistory.Location = new System.Drawing.Point(0, 0);
+            this._listBoxCommandHistory.Name = "listBox1";
+            this._listBoxCommandHistory.Size = new System.Drawing.Size(723, 69);
+            this._listBoxCommandHistory.TabIndex = 5;
             // 
             // textBox1
             // 
-            this.textBox1.BackColor = System.Drawing.SystemColors.Window;
-            this.textBox1.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.textBox1.ForeColor = System.Drawing.SystemColors.WindowText;
-            this.textBox1.Location = new System.Drawing.Point(0, 80);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(723, 20);
-            this.textBox1.TabIndex = 4;
+            this._textBoxCommand.BackColor = System.Drawing.SystemColors.Window;
+            this._textBoxCommand.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this._textBoxCommand.ForeColor = System.Drawing.SystemColors.WindowText;
+            this._textBoxCommand.Location = new System.Drawing.Point(0, 80);
+            this._textBoxCommand.Name = "textBox1";
+            this._textBoxCommand.Size = new System.Drawing.Size(723, 20);
+            this._textBoxCommand.TabIndex = 4;
             // 
             // MonMonMainForm
             // 
@@ -325,7 +325,7 @@
             this.BackColor = System.Drawing.SystemColors.ControlDark;
             this.ClientSize = new System.Drawing.Size(723, 500);
             this.Controls.Add(this._dockPanel);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this._panelCommand);
             this.Controls.Add(this.toolStrip1);
             this.Controls.Add(this._menuStrip);
             this.IsMdiContainer = true;
@@ -338,8 +338,8 @@
             this._menuStrip.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
             this.toolStrip1.PerformLayout();
-            this.panel1.ResumeLayout(false);
-            this.panel1.PerformLayout();
+            this._panelCommand.ResumeLayout(false);
+            this._panelCommand.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -367,9 +367,9 @@
         private System.Windows.Forms.ToolStripMenuItem filesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem ouputToolStripMenuItem;
         private System.Windows.Forms.SaveFileDialog _saveFileDialog;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.ListBox listBox1;
-        private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.Panel _panelCommand;
+        private System.Windows.Forms.ListBox _listBoxCommandHistory;
+        private System.Windows.Forms.TextBox _textBoxCommand;
     }
 }
 
