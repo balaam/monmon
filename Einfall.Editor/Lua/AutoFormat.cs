@@ -82,6 +82,7 @@ namespace Einfall.Editor.Lua
                         // remove a tab
                         string newText = scintilla.Lines.Current.Previous.Text;
                         newText = newText.Remove(newText.IndexOf("\t"), 1);
+                        newText = newText.Replace("\r\n", ""); // otherwise an extra line is inserted.
                         scintilla.Lines.Current.Previous.Text = newText;
                             
                     }
@@ -108,6 +109,7 @@ namespace Einfall.Editor.Lua
                         " do").TrimEnd('\n', '\r');
 
                 }
+
                 DoIndent(scintilla);
             }
     
@@ -250,12 +252,7 @@ namespace Einfall.Editor.Lua
             return true;
         }
 
-        private static void DoIndent(Scintilla scintilla)
-        {
-            string indent = GetStartingWhiteSpace(scintilla.Lines.Current.Previous.Text);
-            scintilla.Lines.Current.Text = indent + scintilla.Lines.Current.Text;
-            scintilla.CurrentPos = scintilla.Lines.Current.EndPosition;
-        }
+  
 
         private static string GetStartingWhiteSpace(string previousLine)
         {
@@ -279,18 +276,18 @@ namespace Einfall.Editor.Lua
             }
             return indent;
         }
+
+        private static void DoIndent(Scintilla scintilla)
+        {
+            DoIndent(scintilla, "");
+        }
+
         private static void DoIndent(Scintilla scintilla, string extra)
         {
-            Line curLine = scintilla.Lines.Current;
-            if (!string.IsNullOrEmpty(curLine.Text))
-                return;
-            curLine.Indentation = curLine.Previous.Indentation;
-            scintilla.CurrentPos = curLine.IndentPosition;
-
-            if (!string.IsNullOrEmpty(extra))
-            {
-                scintilla.InsertText(extra);
-            }
+            string priorIndent = GetStartingWhiteSpace(scintilla.Lines.Current.Previous.Text);
+            priorIndent = priorIndent.Replace("\r\n", "");
+            scintilla.Lines.Current.Text = extra + priorIndent;
+            scintilla.CurrentPos = scintilla.Lines.Current.EndPosition;
         }
 
         public bool IsPosJustAfterFunction(string code, int position)
