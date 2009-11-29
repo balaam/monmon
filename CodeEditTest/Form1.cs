@@ -42,6 +42,7 @@ namespace MonMon
         FunctionPage _functionPage  = new FunctionPage();
         FilePage _filePage          = new FilePage();
         OutputPage _outputPage      = new OutputPage();
+        Shell _shell;
 
         public MonMonMainForm(string[] args)
         {
@@ -66,6 +67,8 @@ namespace MonMon
             _filePage.DoubleClickFileList += new EventHandler(OnFileListDoubleClicked);
             _filePage.CloseFiles += new EventHandler(OnCloseFiles);
             _outputPage.OnDblClickFindResult += new EventHandler(OnDoubleClickFindResult);
+
+            _shell = new Shell(_textBoxCommand, _listBoxCommandHistory);
         }
 
         void OnCloseFiles(object sender, EventArgs e)
@@ -171,7 +174,14 @@ namespace MonMon
         // This should be more generalized
         private void OnKeyDownOnForm(object sender, KeyEventArgs e)
         {
-            if (e.Control && e.Shift && e.KeyCode == Keys.F)
+
+            if (e.KeyCode == Keys.Oem8) // tidle
+            {
+                _panelCommand.Visible = !_panelCommand.Visible;
+                _textBoxCommand.Focus();
+                e.Handled = true;
+            }
+            else if (e.Control && e.Shift && e.KeyCode == Keys.F)
             {
                // Find all
 
