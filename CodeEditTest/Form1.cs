@@ -31,7 +31,7 @@ namespace MonMon
         Selection _selection;
         private static MRUManager<string> _mruManager = new MRUManager<string>("Paths", 10);
         private DeserializeDockContent _deserializeDockContent;
-      
+        List<Shortcut> _shortCuts = new List<Shortcut>(); // this needs some clever sorting.
         List<CaretHistory> _caretHistory = new List<CaretHistory>();
         FindAll _findAllDialog = new FindAll();
         List<FindResult> _findResults = new List<FindResult>();
@@ -69,6 +69,49 @@ namespace MonMon
             _outputPage.OnDblClickFindResult += new EventHandler(OnDoubleClickFindResult);
 
             _shell = new Shell(_textBoxCommand, _listBoxCommandHistory);
+            InitShorcuts();
+        }
+
+        private void InitShorcuts()
+        {
+            _shortCuts.Add(new Shortcut(false, false, false, Keys.Oem8,
+                delegate(object sender, EventArgs args)
+                {
+                    _panelCommand.Visible = !_panelCommand.Visible;
+                    _textBoxCommand.Focus();
+                }));
+
+            _shortCuts.Add(new Shortcut(false, true, true, Keys.F,
+                 delegate(object sender, EventArgs args)
+                 {
+                     // Find all
+
+                     // preload find all with selected text
+                     CodePage cp = GetVisibleCodePage();
+                     if (cp == null)
+                     {
+                         return; // nothing to search.
+                     }
+
+                     string selectedText = cp.Scintilla.Selection.Text;
+                     if (!string.IsNullOrEmpty(selectedText))
+                     {
+                         _findAllDialog.SetDefaultSearchString(selectedText);
+                     }
+                     else
+                     {
+                         if (System.Windows.Forms.Clipboard.ContainsText())
+                         {
+                             _findAllDialog.SetDefaultSearchString(System.Windows.Forms.Clipboard.GetText());
+                         }
+                     }
+
+
+                     if (_findAllDialog.ShowDialog(this) == DialogResult.OK)
+                     {
+                         FindAll(_findAllDialog.SearchString);
+                     }
+                 }));
         }
 
         void OnCloseFiles(object sender, EventArgs e)
@@ -171,45 +214,17 @@ namespace MonMon
             findResult.CodePage.Scintilla.GoTo.Position(findResult.Start);
         }
 
-        // This should be more generalized
         private void OnKeyDownOnForm(object sender, KeyEventArgs e)
         {
-
-            if (e.KeyCode == Keys.Oem8) // tidle
+            foreach (Shortcut sc in _shortCuts)
             {
-                _panelCommand.Visible = !_panelCommand.Visible;
-                _textBoxCommand.Focus();
-                e.Handled = true;
-            }
-            else if (e.Control && e.Shift && e.KeyCode == Keys.F)
-            {
-               // Find all
-
-                // preload find all with selected text
-                CodePage cp = GetVisibleCodePage();
-                if (cp == null)
+                if (sc.IsActivated(e))
                 {
-                    return; // nothing to search.
+                    sc.Execute();
+                    e.SuppressKeyPress = true;
+                    e.Handled = true;
+                    return;
                 }
-           
-                string selectedText = cp.Scintilla.Selection.Text;
-                if (!string.IsNullOrEmpty(selectedText))
-                {
-                    _findAllDialog.SetDefaultSearchString(selectedText);
-                }
-                else
-                {
-                    if (System.Windows.Forms.Clipboard.ContainsText())
-                    {
-                        _findAllDialog.SetDefaultSearchString(System.Windows.Forms.Clipboard.GetText());
-                    }
-                }
-                
-           
-               if (_findAllDialog.ShowDialog(this) == DialogResult.OK)
-               {
-                   FindAll(_findAllDialog.SearchString);
-               }
             }
         }
 
