@@ -298,22 +298,22 @@
             this._panelCommand.TabIndex = 11;
             this._panelCommand.Visible = false;
             // 
-            // listBox1
+            // _listBoxCommandHistory
             // 
             this._listBoxCommandHistory.Dock = System.Windows.Forms.DockStyle.Fill;
             this._listBoxCommandHistory.FormattingEnabled = true;
             this._listBoxCommandHistory.Location = new System.Drawing.Point(0, 0);
-            this._listBoxCommandHistory.Name = "listBox1";
+            this._listBoxCommandHistory.Name = "_listBoxCommandHistory";
             this._listBoxCommandHistory.Size = new System.Drawing.Size(723, 69);
             this._listBoxCommandHistory.TabIndex = 5;
             // 
-            // textBox1
+            // _textBoxCommand
             // 
             this._textBoxCommand.BackColor = System.Drawing.SystemColors.Window;
             this._textBoxCommand.Dock = System.Windows.Forms.DockStyle.Bottom;
             this._textBoxCommand.ForeColor = System.Drawing.SystemColors.WindowText;
             this._textBoxCommand.Location = new System.Drawing.Point(0, 80);
-            this._textBoxCommand.Name = "textBox1";
+            this._textBoxCommand.Name = "_textBoxCommand";
             this._textBoxCommand.Size = new System.Drawing.Size(723, 20);
             this._textBoxCommand.TabIndex = 4;
             // 
