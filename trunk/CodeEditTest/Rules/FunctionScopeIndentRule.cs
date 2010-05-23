@@ -198,8 +198,7 @@ namespace MonMon.Rules
         public override void Fire(ScintillaNet.Scintilla scintilla)
         {
             FireRule(scintilla, "default_indent");
-            scintilla.Lines.Current.Text = "\t";
-            scintilla.CurrentPos = scintilla.Lines.Current.EndPosition;
+            Indent(scintilla);
         }
     }
 }

@@ -93,10 +93,6 @@
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
-    <Reference Include="WeifenLuo.WinFormsUI.Docking, Version=2.3.1.24483, Culture=neutral, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>.\WeifenLuo.WinFormsUI.Docking.dll</HintPath>
-    </Reference>
     <Reference Include="WindowsBase">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
@@ -110,15 +106,11 @@
     </Compile>
     <Compile Include="ArgumentsReceivedEventArgs.cs" />
     <Compile Include="CaretHistory.cs" />
-    <Compile Include="CodePage.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="CodePage.cs" />
     <Compile Include="CodePage.Designer.cs">
       <DependentUpon>CodePage.cs</DependentUpon>
     </Compile>
-    <Compile Include="FilePage.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FilePage.cs" />
     <Compile Include="FilePage.Designer.cs">
       <DependentUpon>FilePage.cs</DependentUpon>
     </Compile>
@@ -143,9 +135,7 @@
     <Compile Include="FunctionList.Designer.cs">
       <DependentUpon>FunctionList.cs</DependentUpon>
     </Compile>
-    <Compile Include="FunctionPage.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="FunctionPage.cs" />
     <Compile Include="FunctionPage.Designer.cs">
       <DependentUpon>FunctionPage.cs</DependentUpon>
     </Compile>
@@ -156,9 +146,7 @@
     <Compile Include="OpenFilesList.Designer.cs">
       <DependentUpon>OpenFilesList.cs</DependentUpon>
     </Compile>
-    <Compile Include="OutputPage.cs">
-      <SubType>Form</SubType>
-    </Compile>
+    <Compile Include="OutputPage.cs" />
     <Compile Include="OutputPage.Designer.cs">
       <DependentUpon>OutputPage.cs</DependentUpon>
     </Compile>
@@ -262,6 +250,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\DockPanel\WinFormsUI\WinFormsUI.csproj">
+      <Project>{C75532C4-765B-418E-B09B-46D36B2ABDB1}</Project>
+      <Name>WinFormsUI</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Einfall.Editor\Einfall.Editor.CodeEdit.csproj">
       <Project>{9A290237-815C-4AD0-9BB2-B660D90DA7F7}</Project>
       <Name>Einfall.Editor.CodeEdit</Name>
