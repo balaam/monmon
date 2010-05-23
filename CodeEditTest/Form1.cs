@@ -38,6 +38,9 @@ namespace MonMon
         List<CodePage> _codePageList = new List<CodePage>();
         Dictionary<string, List<CompleteData>> _autocompleteList;
 
+        // Format Rules
+        FormatAid _formatAid = new FormatAid();
+
         // Helper Windows
         FunctionPage _functionPage  = new FunctionPage();
         FilePage _filePage          = new FilePage();
@@ -55,21 +58,36 @@ namespace MonMon
             recentFilesToolStripMenuItem.DropDownItemClicked += new ToolStripItemClickedEventHandler(OnOpenRecentFile);
             //!_statusLabel.Text = "Ready";
             //!_tabControl.MouseDown += new MouseEventHandler(OnMouseDownOnTab);
+            
+            ProcessCommandLineArguments(args);
             this.KeyPreview = true;
-            this.KeyDown += new KeyEventHandler(this.OnKeyDownOnForm);
-
-        
-
-            Application.ThreadException += new System.Threading.ThreadExceptionEventHandler(OnThreadException);
-            LoadArgs(args);
-            _functionPage.OnRefreshClicked += new EventHandler(Refresh_Click);
-            _functionPage.OnFunctionDblClicked += new EventHandler(OnFunctionShortCutDblClicked);
-            _filePage.DoubleClickFileList += new EventHandler(OnFileListDoubleClicked);
-            _filePage.CloseFiles += new EventHandler(OnCloseFiles);
-            _outputPage.OnDblClickFindResult += new EventHandler(OnDoubleClickFindResult);
-
+            AddFormEventHandlers();
+            AddFormatRules();
             _shell = new Shell(_textBoxCommand, _listBoxCommandHistory);
             InitShorcuts();
+        }
+
+        /// <summary>
+        /// This could be data driven.
+        /// It adds rules that reformat the code depending on what's being added.
+        /// If a rule succesfully fires, it stops looking for new rules to apply.
+        /// Therefore the rule order is important.
+        /// </summary>
+        private void AddFormatRules()
+        {
+            _formatAid.AddRule(new Rules.FunctionScopeIndentRule());
+            _formatAid.AddRule(new Rules.DefaultIndentRule());
+        }
+
+        private void AddFormEventHandlers()
+        {
+            this.KeyDown +=                         new KeyEventHandler(this.OnKeyDownOnForm);
+            Application.ThreadException +=          new System.Threading.ThreadExceptionEventHandler(OnThreadException);
+            _functionPage.OnRefreshClicked +=       new EventHandler(Refresh_Click);
+            _functionPage.OnFunctionDblClicked +=   new EventHandler(OnFunctionShortCutDblClicked);
+            _filePage.DoubleClickFileList +=        new EventHandler(OnFileListDoubleClicked);
+            _filePage.CloseFiles +=                 new EventHandler(OnCloseFiles);
+            _outputPage.OnDblClickFindResult +=     new EventHandler(OnDoubleClickFindResult);
         }
 
         private void InitShorcuts()
@@ -367,7 +385,7 @@ namespace MonMon
             // This could be inside the codepage?
             Scintilla scintilla = CreateNewLuaScintilla();
             scintilla.Text = fullText;
-            CodePage page = new CodePage(scintilla, _autocompleteList);
+            CodePage page = new CodePage(scintilla, _autocompleteList, _formatAid);
             page.Disposed += delegate(object sender, EventArgs e)
             {
                 _codePageList.Remove(page);
@@ -649,7 +667,7 @@ namespace MonMon
             {
                 LoadArgsCallback l = delegate()
                 {
-                    LoadArgs(args);
+                    ProcessCommandLineArguments(args);
                     this.BringToFront();
                     this.Focus();
                     SetForegroundWindow(this.Handle);
@@ -659,11 +677,11 @@ namespace MonMon
             }
             else
             {
-                LoadArgs(args);
+                ProcessCommandLineArguments(args);
             }
         }
 
-        private void LoadArgs(string[] args)
+        private void ProcessCommandLineArguments(string[] args)
         {
 
             foreach (string file in args)

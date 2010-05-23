@@ -20,6 +20,7 @@ namespace MonMon
         AutoFormat _autoFormat = new AutoFormat();
         AutoCompleteLua _autoComplete;
         public event EventHandler OnModifiedFlagChanged;
+        FormatAid _formatAid = new FormatAid();
         int _diskHash;
         bool _modified = false;
      
@@ -45,14 +46,14 @@ namespace MonMon
             }
         }
 
-        public CodePage(Scintilla scintilla, Dictionary<string, List<CompleteData>> autoComplete)
+        public CodePage(Scintilla scintilla, Dictionary<string, List<CompleteData>> autoComplete, FormatAid formatAid)
         {
 
             InitializeComponent();
             _scintilla = scintilla;
             _scintilla.Dock = DockStyle.Fill;
-            _autoComplete = new AutoCompleteLua(_scintilla, autoComplete, _autoFormat);
-
+            _autoComplete = new AutoCompleteLua(_scintilla, autoComplete);
+            _formatAid = formatAid;
             SetHorizontalScrollBar();
 
             
@@ -97,9 +98,6 @@ namespace MonMon
 
             }
         }
-
-
-
 
         private void UpdateName()
         {
@@ -147,8 +145,7 @@ namespace MonMon
 
             if(e.Ch == '(')
             {
-                scintilla.CallTip.Show("Your smart Tooltip functionality", scintilla.CurrentPos);
-                
+                scintilla.CallTip.Show("Your smart Tooltip functionality", scintilla.CurrentPos);     
             }
             else
             {
@@ -162,21 +159,8 @@ namespace MonMon
                 return;
             }
 
-
-            // If its the end of a function then add end
-            if (e.Ch == ')')
-            {
-                _autoFormat.OnClosingParenAdded(scintilla);
-
-            }
-            else if (e.Ch == '\r')
-            {
-                _autoFormat.OnEnterPressed(scintilla);
-            }
-            else if (e.Ch == '.' || e.Ch == ':')
-            {
-                _autoComplete.OnAutoCompleteCharAdded(scintilla);
-            }
+            // Check rules
+            _formatAid.ProcessInput(scintilla, e.Ch);
         }
 
         protected override void OnClosed(EventArgs e)
