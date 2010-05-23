@@ -75,6 +75,7 @@ namespace MonMon
         /// </summary>
         private void AddFormatRules()
         {
+            _formatAid.AddRule(new Rules.TableIndentRule());
             _formatAid.AddRule(new Rules.FunctionScopeIndentRule());
             _formatAid.AddRule(new Rules.DefaultIndentRule());
         }

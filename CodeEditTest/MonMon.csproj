@@ -106,11 +106,15 @@
     </Compile>
     <Compile Include="ArgumentsReceivedEventArgs.cs" />
     <Compile Include="CaretHistory.cs" />
-    <Compile Include="CodePage.cs" />
+    <Compile Include="CodePage.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="CodePage.Designer.cs">
       <DependentUpon>CodePage.cs</DependentUpon>
     </Compile>
-    <Compile Include="FilePage.cs" />
+    <Compile Include="FilePage.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FilePage.Designer.cs">
       <DependentUpon>FilePage.cs</DependentUpon>
     </Compile>
@@ -135,7 +139,9 @@
     <Compile Include="FunctionList.Designer.cs">
       <DependentUpon>FunctionList.cs</DependentUpon>
     </Compile>
-    <Compile Include="FunctionPage.cs" />
+    <Compile Include="FunctionPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="FunctionPage.Designer.cs">
       <DependentUpon>FunctionPage.cs</DependentUpon>
     </Compile>
@@ -146,7 +152,9 @@
     <Compile Include="OpenFilesList.Designer.cs">
       <DependentUpon>OpenFilesList.cs</DependentUpon>
     </Compile>
-    <Compile Include="OutputPage.cs" />
+    <Compile Include="OutputPage.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Include="OutputPage.Designer.cs">
       <DependentUpon>OutputPage.cs</DependentUpon>
     </Compile>
@@ -202,6 +210,7 @@
     </Compile>
     <Compile Include="Rules\DefaultIndentRule.cs" />
     <Compile Include="Rules\FunctionScopeIndentRule.cs" />
+    <Compile Include="Rules\TableIndentRule.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="SettingsReader.cs" />
     <Compile Include="Shell.cs" />
