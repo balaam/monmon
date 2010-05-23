@@ -17,7 +17,6 @@ namespace MonMon
     {
         string _path;
         Scintilla _scintilla;
-        AutoFormat _autoFormat = new AutoFormat();
         AutoCompleteLua _autoComplete;
         public event EventHandler OnModifiedFlagChanged;
         FormatAid _formatAid = new FormatAid();

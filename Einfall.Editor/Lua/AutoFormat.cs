@@ -7,6 +7,8 @@ using Debug = System.Diagnostics.Debug;
 
 namespace Einfall.Editor.Lua
 {
+    // THIS CLASS IS NO LONGER IN USE
+    // IT'S ONLY HERE TO COPY CODE FROM
     public class AutoFormat
     {
         /// <summary>
