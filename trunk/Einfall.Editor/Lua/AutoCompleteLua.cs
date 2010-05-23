@@ -14,7 +14,7 @@ namespace Einfall.Editor.Lua
     public class AutoCompleteLua
     {
         CharacterEnterState _state = CharacterEnterState.Normal;
-        AutoFormat _autoFormat;
+
         Dictionary<string, List<CompleteData>> _completionData = new Dictionary<string, List<CompleteData>>();
         List<string> _currentList = new List<string>();
         string _currentWord = "";
@@ -28,9 +28,8 @@ namespace Einfall.Editor.Lua
             }
         }
 
-        public AutoCompleteLua(Scintilla scintilla, Dictionary<string, List<CompleteData>> autoComplete,AutoFormat af)
+        public AutoCompleteLua(Scintilla scintilla, Dictionary<string, List<CompleteData>> autoComplete)
         {
-            _autoFormat = af;
             //scintilla.AutoComplete.AutoHide = true;
             //scintilla.AutoComplete.IsCaseSensitive = false;
             scintilla.AutoComplete.SingleLineAccept = false;
