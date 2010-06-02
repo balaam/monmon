@@ -2,21 +2,17 @@
 
 = Introduction =
 
-MonMon uses Scintilla to create a pleasant Lua IDE (http://www.lua.org/). 
+I wrote MonMon because I wasn't happy with UltraEdit for developing Lua code. MonMon quickly became usable where I was happy to use it for development but I've since discovered Sublime (http://www.sublimetext.com/). Sublime is an excellent editor and I've started using it in favour of MonMon.
+
+The MonMon code is probably still quite useful if you're looking for reference about how to use Scintilla.NET (it's a little messy, I was hacky something together as fast as possible and then started to refactor it, which is the current state it's in.)
 
 = Helping Out =
 
-If you'd like to contribute - you are more than welcome. I recommend Visual Studio Express to edit the C# code.
+I'm not longer maintaining this project but if you want to compile the code you will need:
 
-http://www.microsoft.com/express/vcsharp/
+ScintillaNET(http://www.codeplex.com/ScintillaNET) DockPanel? Suite(http://sourceforge.net/projects/dockpanelsuite/) and NUnit(http://www.nunit.org/). 
 
-You will also need Scintilla and NUnit
-
-ScintillaNET(http://www.codeplex.com/ScintillaNET) and NUnit(http://www.nunit.org/).
-
-If it's possible please write unit tests for your code :D
-
-The project is currently very usable but in the early stages. This means there's not a lot of code so it's easy to understand pretty much everything that's going on.
+It uses the very latest version of DockPanel and requires the project to be included in the solution. (This was done so I could close tabs with the middle mouse button)
 
 = Features =
 
@@ -24,6 +20,7 @@ The project is currently very usable but in the early stages. This means there's
   * Find All
   * Function listing
   * Full syntax highlighting for LUA
+  * Partial implemented rule based autoformating.
 
 == Coming features ==
 
