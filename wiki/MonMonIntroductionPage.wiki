@@ -2,7 +2,7 @@
 
 = Introduction =
 
-I wrote MonMon because I wasn't happy with UltraEdit for developing Lua code. MonMon quickly became usable where I was happy to use it for development but I've since discovered Sublime (http://www.sublimetext.com/). Sublime is an excellent editor and I've started using it in favour of MonMon.
+I wrote MonMon because I wasn't happy with UltraEdit for developing Lua code. MonMon quickly became usable and I was happy to use it for Lua development but I've since discovered Sublime (http://www.sublimetext.com/). Sublime is an excellent editor and I've started using it in favour of MonMon.
 
 The MonMon code is probably still quite useful if you're looking for reference about how to use Scintilla.NET (it's a little messy, I was hacky something together as fast as possible and then started to refactor it, which is the current state it's in.)
 
